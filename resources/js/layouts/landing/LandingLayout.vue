@@ -1,17 +1,14 @@
 <script setup>
-  import  Header from '@/components/land/Header.vue';
-  import  Footer from '@/components/land/Footer.vue';
-  defineProps({
+import Footer from '@/components/partials/Footer.vue';
+import Header from '@/components/partials/Header.vue';
+defineProps({
     canLogin: {
         type: Boolean,
     },
-    canRegister: {
-        type: Boolean,
-    },
-  })
+});
 </script>
 <template>
-  <Header :canLogin="canLogin" :canRegister="canRegister" />
-  <slot />
-  <Footer />
+    <Header :canLogin="canLogin" />
+    <slot />
+    <Footer />
 </template>
