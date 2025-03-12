@@ -1,11 +1,21 @@
+<script setup>
+const props = defineProps({
+    width: {
+        type: String
+    },
+    logo: {
+        type: String
+    }
+})
+</script>
 <template>
-    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
-        <div>
+    <main class="w-5/6 h-[calc(100vh-90px)] mx-auto flex flex-col justify-center items-center">
+        <figure>
             <slot name="logo" />
-        </div>
+        </figure>
 
-        <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
+        <div :class="width + ' ' + 'mt-6 bg-gray-50 dark:bg-[#0e0e0e] shadow-[0_1px_8px_-5px_#DE5976] rounded-lg'">
             <slot />
         </div>
-    </div>
+    </main>
 </template>

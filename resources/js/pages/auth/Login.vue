@@ -1,16 +1,18 @@
 <script setup>
 import { Head, Link, useForm } from '@inertiajs/vue3';
-import AuthenticationCard from '@/Components/AuthenticationCard.vue';
-import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue';
-import Checkbox from '@/Components/Checkbox.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
+import AuthenticationCard from '@/components/AuthenticationCard.vue';
+import AuthenticationCardLogo from '@/components/AuthenticationCardLogo.vue';
+import Checkbox from '@/components/Checkbox.vue';
+import InputError from '@/components/InputError.vue';
+import InputLabel from '@/components/InputLabel.vue';
+import PrimaryButton from '@/components/PrimaryButton.vue';
+import TextInput from '@/components/TextInput.vue';
+import LandingLayout from '@/layouts/landing/LandingLayout.vue';
 
 defineProps({
     canResetPassword: Boolean,
     status: String,
+    canLogin: Boolean,
 });
 
 const form = useForm({
@@ -30,9 +32,9 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="Log in" />
-
-    <AuthenticationCard>
+    <Head title="Login" />
+<LandingLayout :canLogin="canLogin">
+    <AuthenticationCard :width="'max-w-md w-full'">
         <template #logo>
             <AuthenticationCardLogo />
         </template>
@@ -40,51 +42,34 @@ const submit = () => {
         <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
             {{ status }}
         </div>
-
-        <form @submit.prevent="submit">
+        <form class="p-6 space-y-6" method="POST" action="/login">
+            <h1 class="text-xl font-bold tracking-tight leading-tight">Inicia sesión en tu cuenta</h1>
             <div>
-                <InputLabel for="email" value="Email" />
-                <TextInput
-                    id="email"
-                    v-model="form.email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    required
-                    autofocus
-                    autocomplete="username"
-                />
-                <InputError class="mt-2" :message="form.errors.email" />
+                <InputLabel for="email" value="Correo electronico" />
+                <TextInput id="email" placeholder="jirehimport@gmail.com" class="block mt-1 w-full" type="email" name="email" required autofocus autocomplete="username" />
             </div>
 
             <div class="mt-4">
-                <InputLabel for="password" value="Password" />
-                <TextInput
-                    id="password"
-                    v-model="form.password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    required
-                    autocomplete="current-password"
-                />
-                <InputError class="mt-2" :message="form.errors.password" />
+                <InputLabel for="password" value="Contraseña" />
+                <TextInput id="password" placeholder="••••••••" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
             </div>
 
-            <div class="block mt-4">
-                <label class="flex items-center">
-                    <Checkbox v-model:checked="form.remember" name="remember" />
-                    <span class="ms-2 text-sm text-gray-600">Remember me</span>
+            <div class="flex items-center justify-between mt-4">
+                <label for="remember_me" class="flex items-center cursor-pointer">
+                    <Checkbox id="remember_me" name="remember" />
+                    <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">Recordarme</span>
                 </label>
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <Link v-if="canResetPassword" :href="route('password.request')" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    Forgot your password?
+                <Link v-if="canResetPassword" class="hover:underline text-sm text-gray-600 dark:text-gray-400 hover:text-[#DE5976]"  :href="route('password.request')">
+                    Recuperar contraseña
                 </Link>
-
-                <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Log in
-                </PrimaryButton>
             </div>
+            <PrimaryButton>
+                Iniciar sesión
+            </PrimaryButton>
+            <p class="text-sm font-light text-gray-400">
+                ¿No se ha registrado? <Link  :href="route('register')" class="hover:underline font-semibold text-[#DE5976]">Registrarse</Link>
+            </p>
         </form>
     </AuthenticationCard>
+</LandingLayout>
 </template>

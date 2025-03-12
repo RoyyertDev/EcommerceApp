@@ -25,7 +25,7 @@ const price = props.price ?? null;
         <figure class="h-full w-full overflow-hidden rounded-lg">
             <img :src="image" :alt="title" />
         </figure>
-        <div v-if="$price !== null" class="flex items-center justify-between">
+        <div v-if="price !== null" class="flex items-center justify-between">
             <h1>{{ title }}</h1>
             <span class="text-center font-semibold text-[#DE5976]">{{ price }}</span>
         </div>
