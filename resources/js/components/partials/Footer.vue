@@ -18,7 +18,7 @@ import { Link } from '@inertiajs/vue3';
                 <h1 class="pb-1 font-semibold">Información</h1>
                 <div class="grid grid-cols-2 gap-x-8 gap-y-1 text-gray-600 dark:text-gray-400">
                     <Link class="w-auto transition-all duration-300 hover:text-[#DE5976]" href="/">Inicio</Link>
-                    <Link class="w-auto transition-all duration-300 hover:text-[#DE5976]" href="/">Nosotros</Link>
+                    <Link class="w-auto transition-all duration-300 hover:text-[#DE5976]" href="/about">Nosotros</Link>
                     <Link class="w-auto transition-all duration-300 hover:text-[#DE5976]" href="/">Productos</Link>
                     <Link class="w-auto transition-all duration-300 hover:text-[#DE5976]" href="/">Carrito</Link>
                     <Link class="w-auto transition-all duration-300 hover:text-[#DE5976]" href="/">Acceder</Link>
