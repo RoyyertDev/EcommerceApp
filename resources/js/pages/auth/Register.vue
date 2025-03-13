@@ -19,6 +19,15 @@ const form = useForm({
     password: '',
     password_confirmation: '',
     terms: false,
+    surnames: '',
+    identification_document: '',
+    country: '',
+    province: '',
+    city: '',
+    zip_code: '',
+    site_reference: '',
+    phone: '',
+    sex: '',
 });
 
 const submit = () => {
@@ -42,34 +51,34 @@ const submit = () => {
                 <fieldset class="grid grid-cols-2 gap-y-6 gap-x-4 overflow-y-auto max-h-[360px]">
                     <div>
                         <InputLabel for="names" value="Nombres" />
-                        <TextInput placeholder="e.g. Lo Esencial Shop VE" id="names" class="block mt-1 w-full" type="text" name="names" required autofocus autocomplete="names" />
+                        <TextInput v-model="form.name" placeholder="e.g. Lo Esencial Shop VE" id="names" class="block mt-1 w-full" type="text" name="names" required autofocus autocomplete="names" />
                     </div>
                     <div>
                         <InputLabel for="surnames" value="Apellidos" />
-                        <TextInput placeholder="e.g. Compromiso Calidad" id="surnames" class="block mt-1 w-full" type="text" name="surnames" required autofocus autocomplete="surnames" />
+                        <TextInput v-model="form.surnames" placeholder="e.g. Compromiso Calidad" id="surnames" class="block mt-1 w-full" type="text" name="surnames" required autofocus autocomplete="surnames" />
                     </div>
                     <div>
                         <InputLabel for="identification_document" value="Documento de identificación" />
-                        <TextInput placeholder="DNI o NIE" id="identification_document" class="block mt-1 w-full" type="text" name="identification_document" required autofocus autocomplete="identification_document" />
+                        <TextInput v-model="form.identification_document" placeholder="DNI o NIE" id="identification_document" class="block mt-1 w-full" type="text" name="identification_document" required autofocus autocomplete="identification_document" />
                     </div>
 
                     <div>
                         <InputLabel for="email" value="Correo electronico" />
-                        <TextInput placeholder="jirehimport@gmail.com" id="email" class="block mt-1 w-full" type="email" name="email" required autocomplete="email" />
+                        <TextInput v-model="form.email" placeholder="jirehimport@gmail.com" id="email" class="block mt-1 w-full" type="email" name="email" required autocomplete="email" />
                     </div>
 
                     <div>
                         <InputLabel for="password" value="Contraseña" />
-                        <TextInput placeholder="••••••••" id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
+                        <TextInput v-model="form.password" placeholder="••••••••" id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
                     </div>
 
                     <div>
                         <InputLabel for="password_confirmation" value="Confirmar contraseña" />
-                        <TextInput placeholder="••••••••" id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
+                        <TextInput v-model="form.password_confirmation" placeholder="••••••••" id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
                     </div>
                     <div>
                         <InputLabel for="sex" value="Sexo" />
-                        <Select name="sex" id="sex">
+                        <Select v-model="sex" name="sex" id="sex">
                             <option value="Masculino">Masculino</option>
                             <option value="Femenino">Femenino</option>
                         </Select>
@@ -77,32 +86,32 @@ const submit = () => {
                     <!--Details-->
                     <div>
                         <InputLabel for="country" value="Pais" />
-                        <Select name="country" id="country">
+                        <Select v-model="form.country" name="country" id="country">
                         </Select>
                     </div>
                     <div>
                         <InputLabel for="province" value="Estado" />
-                        <Select name="province" id="province">
+                        <Select v-model="form.province" name="province" id="province">
                         </Select>
                     </div>
                     <div>
                         <InputLabel for="city" value="Ciudad" />
-                        <Select name="city" id="city">
+                        <Select v-model="form.city" name="city" id="city">
                         </Select>
                     </div>
                     <div>
                         <InputLabel for="zip_code" value="Codigo postal" />
-                        <TextInput placeholder="Codigo postal" id="zip_code" class="block mt-1 w-full" type="text" name="zip_code" required autofocus autocomplete="zip_code" />
+                        <TextInput v-model="form.zip_code" placeholder="Codigo postal" id="zip_code" class="block mt-1 w-full" type="text" name="zip_code" required autofocus autocomplete="zip_code" />
                     </div>
                     <div>
                         <InputLabel for="site_reference" value="Lugar de refencia" />
-                        <TextInput placeholder="Lugar de refencia" id="site_reference" class="block mt-1 w-full" type="text" name="site_reference" required autofocus autocomplete="name" />
+                        <TextInput v-model="form.site_reference" placeholder="Lugar de refencia" id="site_reference" class="block mt-1 w-full" type="text" name="site_reference" required autofocus autocomplete="name" />
                     </div>
                     <div>
                         <InputLabel for="phone" value="Telefono" />
                         <div class="grid grid-cols-[15%_1fr] items-center gap-2">
-                            <TextInput placeholder="+1" readonly id="phoneCode" class="block mt-1 w-full" type="text" name="phoneCode" required autofocus autocomplete="phoneCode" />
-                            <TextInput placeholder="Telefono" id="phone" class="block mt-1 w-full" type="number" name="phone" required autofocus autocomplete="phone" />
+                            <TextInput v-model="form.phone" placeholder="+1" readonly id="phoneCode" class="block mt-1 w-full" type="text" name="phoneCode" required autofocus autocomplete="phoneCode" />
+                            <TextInput v-model="form.phone" placeholder="Telefono" id="phone" class="block mt-1 w-full" type="number" name="phone" required autofocus autocomplete="phone" />
                         </div>
                     </div>
                 </fieldset>
