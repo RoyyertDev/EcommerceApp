@@ -37,7 +37,6 @@ const submit = () => {
             <template #logo>
                 <AuthenticationCardLogo />
             </template>
-
             <div v-if="status" class="mb-4 text-sm font-medium text-green-600">
                 {{ status }}
             </div>
@@ -56,7 +55,6 @@ const submit = () => {
                         autocomplete="username"
                     />
                 </div>
-
                 <div class="mt-4">
                     <InputLabel for="password" value="Contraseña" />
                     <TextInput
@@ -69,7 +67,6 @@ const submit = () => {
                         autocomplete="current-password"
                     />
                 </div>
-
                 <div class="mt-4 flex items-center justify-between">
                     <label for="remember_me" class="flex cursor-pointer items-center">
                         <Checkbox id="remember_me" name="remember" />

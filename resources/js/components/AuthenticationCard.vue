@@ -9,7 +9,7 @@ const props = defineProps({
 })
 </script>
 <template>
-    <main class="w-5/6 h-[calc(100vh-90px)] mx-auto flex flex-col justify-center items-center">
+    <main class="w-5/6 h-screen mx-auto flex flex-col justify-center items-center">
         <figure>
             <slot name="logo" />
         </figure>

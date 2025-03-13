@@ -1,13 +1,18 @@
 <script setup>
 import { Head, Link, useForm } from '@inertiajs/vue3';
-import AuthenticationCard from '@/Components/AuthenticationCard.vue';
-import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue';
-import Checkbox from '@/Components/Checkbox.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
+import AuthenticationCard from '@/components/AuthenticationCard.vue';
+import AuthenticationCardLogo from '@/components/AuthenticationCardLogo.vue';
+import Checkbox from '@/components/Checkbox.vue';
+import InputError from '@/components/InputError.vue';
+import InputLabel from '@/components/InputLabel.vue';
+import PrimaryButton from '@/components/PrimaryButton.vue';
+import TextInput from '@/components/TextInput.vue';
+import LandingLayout from '@/layouts/landing/LandingLayout.vue';
+import Select from '@/components/Select.vue';
 
+defineProps({
+    canLogin: Boolean,
+})
 const form = useForm({
     name: '',
     email: '',
@@ -21,92 +26,108 @@ const submit = () => {
         onFinish: () => form.reset('password', 'password_confirmation'),
     });
 };
+
 </script>
 
 <template>
     <Head title="Register" />
+    <LandingLayout :canLogin="canLogin">
+        <AuthenticationCard :width="'w-3/5'">
+            <template #logo>
+                <AuthenticationCardLogo />
+            </template>
+            <form class="p-6 space-y-6" @submit.prevent="submit">
+                <!-- @csrf -->
+                <h1 class="text-xl font-bold tracking-tight leading-tight">Registrate para crear tu cuenta</h1>
+                <fieldset class="grid grid-cols-2 gap-y-6 gap-x-4 overflow-y-auto max-h-[360px]">
+                    <div>
+                        <InputLabel for="names" value="Nombres" />
+                        <TextInput placeholder="e.g. Lo Esencial Shop VE" id="names" class="block mt-1 w-full" type="text" name="names" required autofocus autocomplete="names" />
+                    </div>
+                    <div>
+                        <InputLabel for="surnames" value="Apellidos" />
+                        <TextInput placeholder="e.g. Compromiso Calidad" id="surnames" class="block mt-1 w-full" type="text" name="surnames" required autofocus autocomplete="surnames" />
+                    </div>
+                    <div>
+                        <InputLabel for="identification_document" value="Documento de identificación" />
+                        <TextInput placeholder="DNI o NIE" id="identification_document" class="block mt-1 w-full" type="text" name="identification_document" required autofocus autocomplete="identification_document" />
+                    </div>
 
-    <AuthenticationCard>
-        <template #logo>
-            <AuthenticationCardLogo />
-        </template>
+                    <div>
+                        <InputLabel for="email" value="Correo electronico" />
+                        <TextInput placeholder="jirehimport@gmail.com" id="email" class="block mt-1 w-full" type="email" name="email" required autocomplete="email" />
+                    </div>
 
-        <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="name" value="Name" />
-                <TextInput
-                    id="name"
-                    v-model="form.name"
-                    type="text"
-                    class="mt-1 block w-full"
-                    required
-                    autofocus
-                    autocomplete="name"
-                />
-                <InputError class="mt-2" :message="form.errors.name" />
-            </div>
+                    <div>
+                        <InputLabel for="password" value="Contraseña" />
+                        <TextInput placeholder="••••••••" id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
+                    </div>
 
-            <div class="mt-4">
-                <InputLabel for="email" value="Email" />
-                <TextInput
-                    id="email"
-                    v-model="form.email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    required
-                    autocomplete="username"
-                />
-                <InputError class="mt-2" :message="form.errors.email" />
-            </div>
-
-            <div class="mt-4">
-                <InputLabel for="password" value="Password" />
-                <TextInput
-                    id="password"
-                    v-model="form.password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    required
-                    autocomplete="new-password"
-                />
-                <InputError class="mt-2" :message="form.errors.password" />
-            </div>
-
-            <div class="mt-4">
-                <InputLabel for="password_confirmation" value="Confirm Password" />
-                <TextInput
-                    id="password_confirmation"
-                    v-model="form.password_confirmation"
-                    type="password"
-                    class="mt-1 block w-full"
-                    required
-                    autocomplete="new-password"
-                />
-                <InputError class="mt-2" :message="form.errors.password_confirmation" />
-            </div>
-
-            <div v-if="$page.props.jetstream.hasTermsAndPrivacyPolicyFeature" class="mt-4">
-                <InputLabel for="terms">
-                    <div class="flex items-center">
-                        <Checkbox id="terms" v-model:checked="form.terms" name="terms" required />
-
-                        <div class="ms-2">
-                            I agree to the <a target="_blank" :href="route('terms.show')" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Terms of Service</a> and <a target="_blank" :href="route('policy.show')" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Privacy Policy</a>
+                    <div>
+                        <InputLabel for="password_confirmation" value="Confirmar contraseña" />
+                        <TextInput placeholder="••••••••" id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
+                    </div>
+                    <div>
+                        <InputLabel for="sex" value="Sexo" />
+                        <Select name="sex" id="sex">
+                            <option value="Masculino">Masculino</option>
+                            <option value="Femenino">Femenino</option>
+                        </Select>
+                    </div>
+                    <!--Details-->
+                    <div>
+                        <InputLabel for="country" value="Pais" />
+                        <Select name="country" id="country">
+                        </Select>
+                    </div>
+                    <div>
+                        <InputLabel for="province" value="Estado" />
+                        <Select name="province" id="province">
+                        </Select>
+                    </div>
+                    <div>
+                        <InputLabel for="city" value="Ciudad" />
+                        <Select name="city" id="city">
+                        </Select>
+                    </div>
+                    <div>
+                        <InputLabel for="zip_code" value="Codigo postal" />
+                        <TextInput placeholder="Codigo postal" id="zip_code" class="block mt-1 w-full" type="text" name="zip_code" required autofocus autocomplete="zip_code" />
+                    </div>
+                    <div>
+                        <InputLabel for="site_reference" value="Lugar de refencia" />
+                        <TextInput placeholder="Lugar de refencia" id="site_reference" class="block mt-1 w-full" type="text" name="site_reference" required autofocus autocomplete="name" />
+                    </div>
+                    <div>
+                        <InputLabel for="phone" value="Telefono" />
+                        <div class="grid grid-cols-[15%_1fr] items-center gap-2">
+                            <TextInput placeholder="+1" readonly id="phoneCode" class="block mt-1 w-full" type="text" name="phoneCode" required autofocus autocomplete="phoneCode" />
+                            <TextInput placeholder="Telefono" id="phone" class="block mt-1 w-full" type="number" name="phone" required autofocus autocomplete="phone" />
                         </div>
                     </div>
-                    <InputError class="mt-2" :message="form.errors.terms" />
-                </InputLabel>
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <Link :href="route('login')" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    Already registered?
-                </Link>
-
-                <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Register
+                </fieldset>
+                <!-- @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
+                <div v-if=""class="mt-4">
+                        <InputLabel for="terms">
+                            <div class="flex items-center">
+                                <Checkbox name="terms" id="terms" required />
+                                <div class="ms-2">
+                                    {!! __('I agree to the :terms_of_service and :privacy_policy', [
+                                            'terms_of_service' => '<a target="_blank" href="'.route('terms.show').'" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">'.__('Terms of Service').'</a>',
+                                            'privacy_policy' => '<a target="_blank" href="'.route('policy.show').'" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">'.__('Privacy Policy').'</a>',
+                                            ]) !!}
+                                </div>
+                            </div>
+                        </InputLabel>
+                    </div v-else>
+                    @endif -->
+                <PrimaryButton>
+                    Registrarse
                 </PrimaryButton>
-            </div>
-        </form>
-    </AuthenticationCard>
+                <p class="text-sm font-light text-gray-400">
+                    ¿Ya tienes una cuenta? <Link :href="route('login')" class="hover:underline font-semibold text-[#DE5976]">Iniciar sesión</Link>
+                </p>
+            </form>
+        </AuthenticationCard>
+    </LandingLayout>
 </template>
