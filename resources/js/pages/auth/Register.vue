@@ -7,7 +7,9 @@ import Select from '@/components/Select.vue';
 import TextInput from '@/components/TextInput.vue';
 import LandingLayout from '@/layouts/landing/LandingLayout.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import { ref } from 'vue';
 
+const formCard = ref(0);
 defineProps({
     canLogin: Boolean,
 });
@@ -43,170 +45,183 @@ const submit = () => {
                 <AuthenticationCardLogo />
             </template>
             <form class="space-y-6 p-6" @submit.prevent="submit">
-                <!-- @csrf -->
-                <h1 class="text-xl font-bold leading-tight tracking-tight">Registrate para crear tu cuenta</h1>
-                <fieldset class="grid max-h-[360px] grid-cols-2 gap-x-4 gap-y-6 overflow-y-auto">
-                    <div>
-                        <InputLabel for="names" value="Nombres" />
-                        <TextInput
-                            v-model="form.names"
-                            placeholder="e.g. Lo Esencial Shop VE"
-                            id="names"
-                            class="mt-1 block w-full"
-                            type="text"
-                            name="names"
-                            required
-                            autofocus
-                            autocomplete="names"
-                        />
+                <div class="flex items-center justify-between">
+                    <h1 class="text-xl font-bold leading-tight tracking-tight">Registrate para crear tu cuenta</h1>
+                    <div class="flex items-center space-x-1">
+                        <button
+                            @click="formCard = 0"
+                            type="button"
+                            class="rounded-full transition-all duration-300 ease-in-out"
+                            :class="{ 'h-2 w-2 bg-[#DE5976]': formCard === 0, 'h-1 w-1.5 bg-gray-100': formCard === 1 }"
+                        ></button>
+                        <button
+                            @click="formCard = 1"
+                            type="button"
+                            class="rounded-full transition-all duration-300 ease-in-out"
+                            :class="{ 'h-1.5 w-1.5 bg-gray-100': formCard === 0, 'h-2 w-2 bg-[#DE5976]': formCard === 1 }"
+                        ></button>
                     </div>
-                    <div>
-                        <InputLabel for="surnames" value="Apellidos" />
-                        <TextInput
-                            v-model="form.surnames"
-                            placeholder="e.g. Compromiso Calidad"
-                            id="surnames"
-                            class="mt-1 block w-full"
-                            type="text"
-                            name="surnames"
-                            required
-                            autofocus
-                            autocomplete="surnames"
-                        />
+                </div>
+                <div class="overflow-hidden">
+                    <div class="flex transition-all duration-500 ease-in-out" :style="{ transform: `translateX(-${formCard * 100}%)` }">
+                        <fieldset class="grid w-full shrink-0 grid-cols-2 gap-x-4 gap-y-6">
+                            <div>
+                                <InputLabel for="names" value="Nombres" />
+                                <TextInput
+                                    v-model="form.names"
+                                    placeholder="e.g. Lo Esencial Shop VE"
+                                    id="names"
+                                    class="mt-1 block w-full"
+                                    type="text"
+                                    name="names"
+                                    required
+                                    autocomplete="names"
+                                />
+                            </div>
+                            <div>
+                                <InputLabel for="surnames" value="Apellidos" />
+                                <TextInput
+                                    v-model="form.surnames"
+                                    placeholder="e.g. Compromiso Calidad"
+                                    id="surnames"
+                                    class="mt-1 block w-full"
+                                    type="text"
+                                    name="surnames"
+                                    required
+                                    autocomplete="surnames"
+                                />
+                            </div>
+                            <div>
+                                <InputLabel for="identification_document" value="Documento de identificación" />
+                                <TextInput
+                                    v-model="form.identification_document"
+                                    placeholder="DNI o NIE"
+                                    id="identification_document"
+                                    class="mt-1 block w-full"
+                                    type="text"
+                                    name="identification_document"
+                                    required
+                                    autocomplete="identification_document"
+                                />
+                            </div>
+                            <div>
+                                <InputLabel for="email" value="Correo electronico" />
+                                <TextInput
+                                    v-model="form.email"
+                                    placeholder="jirehimport@gmail.com"
+                                    id="email"
+                                    class="mt-1 block w-full"
+                                    type="email"
+                                    name="email"
+                                    required
+                                    autocomplete="email"
+                                />
+                            </div>
+                            <div>
+                                <InputLabel for="password" value="Contraseña" />
+                                <TextInput
+                                    v-model="form.password"
+                                    placeholder="••••••••"
+                                    id="password"
+                                    class="mt-1 block w-full"
+                                    type="password"
+                                    name="password"
+                                    required
+                                    autocomplete="new-password"
+                                />
+                            </div>
+                            <div>
+                                <InputLabel for="password_confirmation" value="Confirmar contraseña" />
+                                <TextInput
+                                    v-model="form.password_confirmation"
+                                    placeholder="••••••••"
+                                    id="password_confirmation"
+                                    class="mt-1 block w-full"
+                                    type="password"
+                                    name="password_confirmation"
+                                    required
+                                    autocomplete="new-password"
+                                />
+                            </div>
+                            <div>
+                                <InputLabel for="sex" value="Sexo" />
+                                <Select v-model="form.gender" name="sex" id="sex">
+                                    <option value="0">Masculino</option>
+                                    <option value="1">Femenino</option>
+                                </Select>
+                            </div>
+                            <PrimaryButton @click="formCard = 1" type="button" class="col-span-2"> Siguiente </PrimaryButton>
+                        </fieldset>
+                        <fieldset class="grid w-full shrink-0 grid-cols-2 gap-x-4 gap-y-6">
+                            <div>
+                                <InputLabel for="country" value="Pais" />
+                                <Select v-model="form.country" name="country" id="country"> </Select>
+                            </div>
+                            <div>
+                                <InputLabel for="province" value="Estado" />
+                                <Select v-model="form.province" name="province" id="province"> </Select>
+                            </div>
+                            <div>
+                                <InputLabel for="city" value="Ciudad" />
+                                <Select v-model="form.city" name="city" id="city"> </Select>
+                            </div>
+                            <div>
+                                <InputLabel for="zip_code" value="Codigo postal" />
+                                <TextInput
+                                    v-model="form.zip_code"
+                                    placeholder="Codigo postal"
+                                    id="zip_code"
+                                    class="mt-1 block w-full"
+                                    type="text"
+                                    name="zip_code"
+                                    required
+                                    autocomplete="zip_code"
+                                />
+                            </div>
+                            <div>
+                                <InputLabel for="site_reference" value="Lugar de refencia" />
+                                <TextInput
+                                    v-model="form.site_reference"
+                                    placeholder="Lugar de refencia"
+                                    id="site_reference"
+                                    class="mt-1 block w-full"
+                                    type="text"
+                                    name="site_reference"
+                                    required
+                                    autocomplete="name"
+                                />
+                            </div>
+                            <div>
+                                <InputLabel for="phone" value="Telefono" />
+                                <div class="grid grid-cols-[15%_1fr] items-center gap-2">
+                                    <TextInput
+                                        v-model="form.phone"
+                                        placeholder="+1"
+                                        readonly
+                                        id="phoneCode"
+                                        class="mt-1 block w-full"
+                                        type="text"
+                                        name="phoneCode"
+                                        required
+                                        autocomplete="phoneCode"
+                                    />
+                                    <TextInput
+                                        v-model="form.phone"
+                                        placeholder="Telefono"
+                                        id="phone"
+                                        class="mt-1 block w-full"
+                                        type="number"
+                                        name="phone"
+                                        required
+                                        autocomplete="phone"
+                                    />
+                                </div>
+                            </div>
+                            <PrimaryButton class="col-span-2"> Registrarse </PrimaryButton>
+                        </fieldset>
                     </div>
-                    <div>
-                        <InputLabel for="identification_document" value="Documento de identificación" />
-                        <TextInput
-                            v-model="form.identification_document"
-                            placeholder="DNI o NIE"
-                            id="identification_document"
-                            class="mt-1 block w-full"
-                            type="text"
-                            name="identification_document"
-                            required
-                            autofocus
-                            autocomplete="identification_document"
-                        />
-                    </div>
+                </div>
 
-                    <div>
-                        <InputLabel for="email" value="Correo electronico" />
-                        <TextInput
-                            v-model="form.email"
-                            placeholder="jirehimport@gmail.com"
-                            id="email"
-                            class="mt-1 block w-full"
-                            type="email"
-                            name="email"
-                            required
-                            autocomplete="email"
-                        />
-                    </div>
-
-                    <div>
-                        <InputLabel for="password" value="Contraseña" />
-                        <TextInput
-                            v-model="form.password"
-                            placeholder="••••••••"
-                            id="password"
-                            class="mt-1 block w-full"
-                            type="password"
-                            name="password"
-                            required
-                            autocomplete="new-password"
-                        />
-                    </div>
-
-                    <div>
-                        <InputLabel for="password_confirmation" value="Confirmar contraseña" />
-                        <TextInput
-                            v-model="form.password_confirmation"
-                            placeholder="••••••••"
-                            id="password_confirmation"
-                            class="mt-1 block w-full"
-                            type="password"
-                            name="password_confirmation"
-                            required
-                            autocomplete="new-password"
-                        />
-                    </div>
-                    <div>
-                        <InputLabel for="sex" value="Sexo" />
-                        <Select v-model="form.gender" name="sex" id="sex">
-                            <option value="0">Masculino</option>
-                            <option value="1">Femenino</option>
-                        </Select>
-                    </div>
-                    <!--Details-->
-                    <!-- <div>
-                        <InputLabel for="country" value="Pais" />
-                        <Select v-model="form.country" name="country" id="country"> </Select>
-                    </div>
-                    <div>
-                        <InputLabel for="province" value="Estado" />
-                        <Select v-model="form.province" name="province" id="province"> </Select>
-                    </div>
-                    <div>
-                        <InputLabel for="city" value="Ciudad" />
-                        <Select v-model="form.city" name="city" id="city"> </Select>
-                    </div>
-                    <div>
-                        <InputLabel for="zip_code" value="Codigo postal" />
-                        <TextInput
-                            v-model="form.zip_code"
-                            placeholder="Codigo postal"
-                            id="zip_code"
-                            class="mt-1 block w-full"
-                            type="text"
-                            name="zip_code"
-                            required
-                            autofocus
-                            autocomplete="zip_code"
-                        />
-                    </div>
-                    <div>
-                        <InputLabel for="site_reference" value="Lugar de refencia" />
-                        <TextInput
-                            v-model="form.site_reference"
-                            placeholder="Lugar de refencia"
-                            id="site_reference"
-                            class="mt-1 block w-full"
-                            type="text"
-                            name="site_reference"
-                            required
-                            autofocus
-                            autocomplete="name"
-                        />
-                    </div>
-                    <div>
-                        <InputLabel for="phone" value="Telefono" />
-                        <div class="grid grid-cols-[15%_1fr] items-center gap-2">
-                            <TextInput
-                                v-model="form.phone"
-                                placeholder="+1"
-                                readonly
-                                id="phoneCode"
-                                class="mt-1 block w-full"
-                                type="text"
-                                name="phoneCode"
-                                required
-                                autofocus
-                                autocomplete="phoneCode"
-                            />
-                            <TextInput
-                                v-model="form.phone"
-                                placeholder="Telefono"
-                                id="phone"
-                                class="mt-1 block w-full"
-                                type="number"
-                                name="phone"
-                                required
-                                autofocus
-                                autocomplete="phone"
-                            />
-                        </div>
-                    </div> -->
-                </fieldset>
                 <!-- @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
                 <div v-if=""class="mt-4">
                         <InputLabel for="terms">
@@ -222,7 +237,6 @@ const submit = () => {
                         </InputLabel>
                     </div v-else>
                     @endif -->
-                <PrimaryButton> Registrarse </PrimaryButton>
                 <p class="text-sm font-light text-gray-400">
                     ¿Ya tienes una cuenta? <Link :href="route('login')" class="font-semibold text-[#DE5976] hover:underline">Iniciar sesión</Link>
                 </p>

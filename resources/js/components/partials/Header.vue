@@ -26,7 +26,7 @@ onMounted(() => {
 </script>
 <template>
     <header
-        class="sticky top-0 z-10 mb-4 w-full rounded-b-3xl bg-white px-7 shadow-[#DE5976] transition-all duration-500 md:px-14 lg:px-28 dark:bg-black"
+        class="sticky top-0 z-10 mb-4 h-14 w-full rounded-b-3xl bg-white px-7 shadow-[#DE5976] transition-all duration-500 md:px-14 lg:px-28 dark:bg-black"
         :class="{ 'shadow-[0_4px_5px_-4px]': scrolled || navOpen }"
     >
         <nav
