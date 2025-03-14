@@ -9,10 +9,22 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
     use HasApiTokens;
+
+    public $incrementing = false; // Desactiva autoincremento
+    protected $keyType = 'string'; // Define la clave primaria como string
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function ($model) {
+            $model->{$model->getKeyName()} = Str::uuid()->toString();
+        });
+    }
 
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;
@@ -31,7 +43,7 @@ class User extends Authenticatable
         'identification_document',
         'email',
         'password',
-        'sex',
+        'gender',
     ];
 
     /**

@@ -3,16 +3,22 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\RoleUser;
 use App\Models\User;
+use App\Models\UserDetail;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Validator;
+use Laravel\Jetstream\Jetstream;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Support\Str;
 
 class RegisteredUserController extends Controller
 {
@@ -33,22 +39,52 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+        DB::beginTransaction();
+        try {
+            Validator::make($request->all(), [
+                'names' => ['required', 'string', 'max:255'],
+                'surnames' => ['required', 'string', 'max:255'],
+                'identification_document' => ['required', 'string', 'max:255', 'unique:users'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'password' => ['required', 'confirmed', Rules\Password::defaults()],
+                'gender' => ['required', 'boolean'],
+                'country' => ['required', 'string', 'max:100'],
+                'province' => ['required', 'string', 'max:100'],
+                'city' => ['required', 'string', 'max:100'],
+                'zip_code' => ['required', 'string', 'max:20'],
+                'site_reference' => ['required', 'string', 'max:250'],
+                'phoneCode' => ['required', 'string', 'max:5'],
+                'phone' => ['required', 'string', 'max:15'],
+                'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
+            ])->validate();
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+            $user = User::create([
+                'names' => Str::upper($request['names']),
+                'surnames' => Str::upper($request['surnames']),
+                'identification_document' => $request['identification_document'],
+                'email' => $request['email'],
+                'password' => Hash::make($request['password']),
+                'gender' => $request['gender']
+            ]);
 
-        event(new Registered($user));
+            UserDetail::create([
+                'user_id' => $user->id,
+                'role_id' => RoleUser::where('name', 'user')->first()->id,
+                'country' => $request['country'],
+                'province' => $request['province'],
+                'city' => $request['city'],
+                'zip_code' => $request['zip_code'],
+                'site_reference' => $request['site_reference'],
+                'phone' => $request['phoneCode'].$request['phone']
+            ]);
 
-        Auth::login($user);
-
-        return to_route('dashboard');
+            DB::commit();
+            event(new Registered($user));
+            Auth::login($user);
+            return to_route('dashboard');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error', $e->getMessage());
+        }
     }
 }
