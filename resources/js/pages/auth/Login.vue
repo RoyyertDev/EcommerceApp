@@ -45,6 +45,7 @@ const submit = () => {
                 <div>
                     <InputLabel for="email" value="Correo electronico" />
                     <TextInput
+                        v-model="form.email"
                         id="email"
                         placeholder="jirehimport@gmail.com"
                         class="mt-1 block w-full"
@@ -58,6 +59,7 @@ const submit = () => {
                 <div class="mt-4">
                     <InputLabel for="password" value="Contraseña" />
                     <TextInput
+                        v-model="form.password"
                         id="password"
                         placeholder="••••••••"
                         class="mt-1 block w-full"
@@ -69,7 +71,7 @@ const submit = () => {
                 </div>
                 <div class="mt-4 flex items-center justify-between">
                     <label for="remember_me" class="flex cursor-pointer items-center">
-                        <Checkbox id="remember_me" name="remember" />
+                        <Checkbox v-model:checked="form.remember" id="remember_me" name="remember" />
                         <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">Recordarme</span>
                     </label>
                     <Link

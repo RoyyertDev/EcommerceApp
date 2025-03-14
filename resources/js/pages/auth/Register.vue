@@ -138,7 +138,7 @@ const submit = () => {
                         </Select>
                     </div>
                     <!--Details-->
-                    <div>
+                    <!-- <div>
                         <InputLabel for="country" value="Pais" />
                         <Select v-model="form.country" name="country" id="country"> </Select>
                     </div>
@@ -205,7 +205,7 @@ const submit = () => {
                                 autocomplete="phone"
                             />
                         </div>
-                    </div>
+                    </div> -->
                 </fieldset>
                 <!-- @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
                 <div v-if=""class="mt-4">

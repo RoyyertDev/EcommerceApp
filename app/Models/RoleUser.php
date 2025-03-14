@@ -7,8 +7,6 @@ use Illuminate\Support\Str;
 
 class RoleUser extends Model
 {
-    protected $table = 'role_user';
-
     public $incrementing = false; // Desactiva autoincremento
     protected $keyType = 'string'; // Define la clave primaria como string
 

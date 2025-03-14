@@ -48,13 +48,13 @@ class RegisteredUserController extends Controller
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                 'password' => ['required', 'confirmed', Rules\Password::defaults()],
                 'gender' => ['required', 'boolean'],
-                'country' => ['required', 'string', 'max:100'],
-                'province' => ['required', 'string', 'max:100'],
-                'city' => ['required', 'string', 'max:100'],
-                'zip_code' => ['required', 'string', 'max:20'],
-                'site_reference' => ['required', 'string', 'max:250'],
-                'phoneCode' => ['required', 'string', 'max:5'],
-                'phone' => ['required', 'string', 'max:15'],
+                // 'country' => ['required', 'string', 'max:100'],
+                // 'province' => ['required', 'string', 'max:100'],
+                // 'city' => ['required', 'string', 'max:100'],
+                // 'zip_code' => ['required', 'string', 'max:20'],
+                // 'site_reference' => ['required', 'string', 'max:250'],
+                // 'phoneCode' => ['required', 'string', 'max:5'],
+                // 'phone' => ['required', 'string', 'max:15'],
                 'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
             ])->validate();
 
@@ -69,13 +69,19 @@ class RegisteredUserController extends Controller
 
             UserDetail::create([
                 'user_id' => $user->id,
-                'role_id' => RoleUser::where('name', 'user')->first()->id,
-                'country' => $request['country'],
-                'province' => $request['province'],
-                'city' => $request['city'],
-                'zip_code' => $request['zip_code'],
-                'site_reference' => $request['site_reference'],
-                'phone' => $request['phoneCode'].$request['phone']
+                'role_id' => RoleUser::where('name', 'admin')->first()->id,
+                'country' => 'Venezuela',
+                'province' => 'Aragua',
+                'city' => 'Maracay',
+                'zip_code' => '2700',
+                'site_reference' => 'Maracay',
+                'phone' => '+584140000000'
+                // 'country' => $request['country'],
+                // 'province' => $request['province'],
+                // 'city' => $request['city'],
+                // 'zip_code' => $request['zip_code'],
+                // 'site_reference' => $request['site_reference'],
+                // 'phone' => $request['phoneCode'].$request['phone']
             ]);
 
             DB::commit();

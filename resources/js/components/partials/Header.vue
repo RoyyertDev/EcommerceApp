@@ -16,8 +16,9 @@ function toggleNav() {
 // function toggleTheme() {
 //     document.documentElement.classList.add('dark');
 // }
+const authUser = usePage().props.auth.user;
+const roleAdmin = usePage().props.roleAdmin;
 onMounted(() => {
-    const authUser = usePage().props.auth.user;
     window.addEventListener('scroll', () => {
         scrolled.value = window.pageYOffset > 0 ? true : false;
     });
@@ -53,10 +54,10 @@ onMounted(() => {
                 </label>
             </div>
             <div class="flex items-center justify-center gap-4" v-if="canLogin">
-                <LinksNav v-if="authUser" :href="authUser.detail && authUser.detail.role_id === 1 ? '/admin/dashboard' : '/dashboard'">{{
+                <LinksNav v-if="true" :href="authUser.detail && authUser.detail.role_id === roleAdmin ? '/admin/dashboard' : '/dashboard'">{{
                     authUser.names
                 }}</LinksNav>
-                <LinksNav v-else route="/login" href="/login">Acceder</LinksNav>
+                <LinksNav v-else route="/login" :href="route('login')">Acceder</LinksNav>
             </div>
         </nav>
     </header>
