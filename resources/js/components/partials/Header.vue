@@ -26,7 +26,7 @@ onMounted(() => {
 </script>
 <template>
     <header
-        class="sticky top-0 z-10 mb-4 w-full rounded-b-3xl bg-white px-7 shadow-[#DE5976] transition-all duration-500 md:px-14 lg:px-28 dark:bg-black"
+        class="sticky top-0 z-10 mb-4 h-14 w-full rounded-b-3xl bg-white px-7 shadow-[#DE5976] transition-all duration-500 md:px-14 lg:px-28 dark:bg-black"
         :class="{ 'shadow-[0_4px_5px_-4px]': scrolled || navOpen }"
     >
         <nav
@@ -54,7 +54,7 @@ onMounted(() => {
                 </label>
             </div>
             <div class="flex items-center justify-center gap-4" v-if="canLogin">
-                <LinksNav v-if="authUser" :href="authUser.detail && authUser.detail.role_id === roleAdmin ? '/admin/dashboard' : '/dashboard'">{{
+                <LinksNav v-if="authUser" :href="route(authUser.detail && authUser.detail.role_id === roleAdmin ? 'admin.dashboard' : 'dashboard')">{{
                     authUser.names
                 }}</LinksNav>
                 <LinksNav v-else route="/login" :href="route('login')">Acceder</LinksNav>
