@@ -2,9 +2,11 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Models\RoleUser;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
@@ -48,8 +50,13 @@ class LoginRequest extends FormRequest
                 'email' => trans('auth.failed'),
             ]);
         }
-
         RateLimiter::clear($this->throttleKey());
+        $user = Auth::user();
+        if ($user && $user->detail->role_id === RoleUser::where('name', 'admin')->first()->id) {
+            $token = $user->createToken('admin_token');
+            session(['admin_token_id' => $token->accessToken->id]);
+            Cookie::queue(cookie('admin_token', $token->plainTextToken, 525600, null, null, true, true));
+        }
     }
 
     /**

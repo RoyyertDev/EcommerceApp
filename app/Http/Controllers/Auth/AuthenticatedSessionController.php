@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\RoleUser;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -42,6 +44,24 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
+        if (Auth::check()) {
+            if (Auth::user() && Auth::user()->detail && Auth::user()->detail->role_id === RoleUser::where('name', 'admin')->first()->id) {
+                $userTokens = Auth::user()->tokens->where('name', 'admin_token');
+                $cookieToken = Cookie::get('admin_token');
+                $sessionTokenId = $request->session()->get('admin_token_id');
+                if ($cookieToken && $sessionTokenId) {
+                    foreach ($userTokens as $token) {
+                        if ($token->id === $sessionTokenId) {
+                            $token->delete();
+                            Cookie::queue(Cookie::forget('admin_token'));
+                            $request->session()->forget('admin_token_id');
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();
