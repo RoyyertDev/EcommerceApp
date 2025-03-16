@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class UserController extends Controller
 {
@@ -12,7 +13,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        return User::with('detail')->get();
     }
 
     /**
@@ -20,7 +21,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $users = $this->index();
+        return Inertia::render('admin/Users', ['users'=>$users]);
     }
 
     /**
