@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -10,10 +11,12 @@ Route::get('/dashboard', function () {
 
 Route::get('/users', [UserController::class, 'create'])->name('users');
 
-Route::get('/products', function () {
-    return Inertia::render('admin/Products');
-})->name('products');
+Route::get('/products', [ProductController::class, 'create'])->name('products');
 
 Route::get('/landing', function (){
     return Inertia::render('admin/Landing');
 })->name('landing');
+
+Route::get('/variantsProduct/{id}', function ($id) {
+    return "<h1>hola</h1>" . $id;
+})->name('products.variant');
