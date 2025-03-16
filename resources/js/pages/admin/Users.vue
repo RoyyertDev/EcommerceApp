@@ -1,8 +1,14 @@
 <script setup>
 import AdminLayout from '@/layouts/admin/AdminLayout.vue';
+import { ref } from 'vue';
 const props = defineProps({
   users: Array,
 })
+const number = ref('5');
+const orderBy = ref('');
+const ascDesc = ref('asc');
+const filter = ref('');
+
 </script>
 
 <template>
