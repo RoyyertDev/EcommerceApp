@@ -22,7 +22,7 @@ class UserController extends Controller
     public function create()
     {
         $users = $this->index();
-        return Inertia::render('admin/Users', ['users'=>$users]);
+        return Inertia::render('admin/users/Show', ['users'=>$users]);
     }
 
     /**

@@ -41,7 +41,7 @@ const logout = () => {
                     <!-- Navigation Links -->
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                         <NavLink :href="route('admin.dashboard')" :active="route().current('admin.dashboard')"> Inicio </NavLink>
-                        <NavLink :href="route('admin.users')" :active="route().current('admin.users')"> Usuarios </NavLink>
+                        <NavLink :href="route('admin.users.create')" :active="route().current('admin.users.create')"> Usuarios </NavLink>
                         <NavLink :href="route('admin.products.create')" :active="route().current('admin.products.create')"> Productos </NavLink>
                         <NavLink :href="route('admin.landing')" :active="route().current('admin.landing')"> Landing </NavLink>
                     </div>
