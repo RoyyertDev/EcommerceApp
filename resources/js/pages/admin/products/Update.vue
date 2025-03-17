@@ -1,7 +1,7 @@
 <script setup>
 import DialogModal from '@/components/DialogModal.vue';
 import InputLabel from '@/components/InputLabel.vue';
-import ButtonRegisterAdmin from '@/components/myComponents/ButtonRegisterAdmin.vue';
+import ButtonUpdateAdmin from '@/components/myComponents/ButtonUpdateAdmin.vue';
 import Select from '@/components/Select.vue';
 import TextInput from '@/components/TextInput.vue';
 import { useForm } from '@inertiajs/vue3';
@@ -13,6 +13,7 @@ const props = defineProps({
     types: Array,
     categories: Array,
     materials: Array,
+    product: Object,
 });
 
 const toggleOpen = () => {
@@ -21,18 +22,18 @@ const toggleOpen = () => {
 };
 
 const form = useForm({
-    name: '',
-    type_product_id: '',
-    category_product_id: '',
-    material_product_id: '',
-    description: '',
+    name: props.product.name,
+    type_product_id: props.product.type_product_id,
+    category_product_id: props.product.category_product_id,
+    material_product_id: props.product.material_product_id,
+    description: props.product.description,
 });
 
 const submit = () => {
     if (!form.name || !form.type_product_id || !form.category_product_id || !form.material_product_id || !form.description) {
         return alert('Todos los campos son requeridos');
     }
-    form.post(route('admin.products.store'), {
+    form.put(route('admin.products.update', props.product.id), {
         onFinish: () => {
             toggleOpen();
             return redirect(route('admin.products.create'));
@@ -42,9 +43,9 @@ const submit = () => {
 </script>
 
 <template>
-    <ButtonRegisterAdmin @toggle="toggleOpen">Registar producto</ButtonRegisterAdmin>
+    <ButtonUpdateAdmin @toggle="toggleOpen">Actualizar</ButtonUpdateAdmin>
     <DialogModal :show="open">
-        <template #title>Registrar producto</template>
+        <template #title>Actualizar - {{ product.name }}</template>
         <template #content>
             <form class="flex flex-col gap-4">
                 <div class="flex flex-col gap-2">
@@ -106,9 +107,9 @@ const submit = () => {
             </form>
         </template>
         <template #footer>
-            <button @click="form.reset()" class="mr-2 rounded-md bg-blue-800 px-2 py-2 text-white">Limpiar campos</button>
+            <button @click="form.reset()" class="mr-2 rounded-md bg-blue-800 px-2 py-2 text-white">Restablecer campos</button>
             <button @click="toggleOpen" class="mr-2 rounded-md bg-red-800 px-2 py-2 text-white">Cancelar</button>
-            <button @click="submit" class="rounded-md bg-[#DE5976] px-2 py-2 text-white">Registrar</button>
+            <button @click="submit" class="rounded-md bg-[#DE5976] px-2 py-2 text-white">Actualizar</button>
         </template>
     </DialogModal>
 </template>

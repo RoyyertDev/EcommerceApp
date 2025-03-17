@@ -1,8 +1,10 @@
 <script setup>
 import ButtonFilter from '@/components/myComponents/ButtonFilter.vue';
-import DivTable from '@/components/myComponents/divTable.vue';
+import DivTable from '@/components/myComponents/DivTable.vue';
+// import Pagination from '@/components/Pagination.vue';
 import AdminLayout from '@/layouts/admin/AdminLayout.vue';
-import CreateView from '@/pages/admin/products/create.vue';
+import CreateView from '@/pages/admin/products/Create.vue';
+import UpdateView from '@/pages/admin/products/Update.vue';
 import { Link } from '@inertiajs/vue3';
 import { ref } from 'vue';
 const category = ref('');
@@ -10,21 +12,10 @@ const material = ref('');
 
 const props = defineProps({
     products: Array,
+    types: Array,
+    categories: Array,
+    materials: Array,
 });
-
-//traer bd
-const categories = [
-    { id: 1, name: 'Exclusivo' },
-    { id: 2, name: 'Casual' },
-    { id: 3, name: 'Deportivo' },
-    { id: 4, name: 'Uniformes' },
-];
-const materials = [
-    { id: 1, name: 'Cuero' },
-    { id: 2, name: 'Piel' },
-    { id: 3, name: 'Madera' },
-    { id: 4, name: 'Metal' },
-];
 </script>
 
 <template>
@@ -62,7 +53,7 @@ const materials = [
                     </select>
                 </template>
                 <template #buttonAside>
-                    <CreateView />
+                    <CreateView :types="types" :categories="categories" :materials="materials" />
                 </template>
                 <template #optionsOrderBy>
                     <option value="id">Registro</option>
@@ -96,14 +87,14 @@ const materials = [
                         </td>
                         <td class="">{{ product.name }}</td>
                         <td class="">{{ product.description }}</td>
-                        <td class="">{{ product.typeProduct.name }}</td>
-                        <td class="">{{ product.categoryProduct.name }}</td>
-                        <td class="">{{ product.materialProducts.name }}</td>
+                        <td class="">{{ product.type_product.name }}</td>
+                        <td class="">{{ product.category_product.name }}</td>
+                        <td class="">{{ product.material_products.name }}</td>
                         <td class="">{{ product.created_at }}</td>
                         <td class="flex h-12 w-28 gap-2">
                             <Link
                                 v-key="variant - product.id"
-                                :href="route('admin.products.variant', product.id)"
+                                :href="route('admin.product.variant', product.id)"
                                 class="flex items-center justify-center gap-1 text-green-600 transition-all duration-300 hover:scale-110"
                             >
                                 <svg fill="#16a34a" xmlns="http://www.w3.org/2000/svg" height="20px" id="icon" viewBox="0 0 32 32" width="20px">
@@ -115,12 +106,18 @@ const materials = [
                                 </svg>
                                 Ver
                             </Link>
-                            <!-- @livewire('admin.products.update', ['id' => $product->id], key('update-' . $product->id)) -->
+                            <UpdateView
+                                :product="product"
+                                :key="'update -' + product.id"
+                                :types="types"
+                                :categories="categories"
+                                :materials="materials"
+                            />
                         </td>
                     </tr>
                 </template>
                 <template #footer>
-                    <!-- {{ products->links() }} -->
+                    <!-- <Pagination :links="products.links" /> -->
                 </template>
             </DivTable>
         </main>

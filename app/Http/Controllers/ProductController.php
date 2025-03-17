@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CategoryProduct;
+use App\Models\MaterialProduct;
 use App\Models\Product;
+use App\Models\TypeProduct;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 
 class ProductController extends Controller
@@ -13,7 +18,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return Product::all();
+        return Product::with('typeProduct', 'categoryProduct', 'materialProducts')->get();
     }
 
     /**
@@ -21,9 +26,11 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $products = $this->index();
-        return Inertia::render('admin/products/show', [
-            'products' => $products
+        return Inertia::render('admin/products/Show', [
+            'products' => $this->index(),
+            'types' => TypeProduct::all(),
+            'categories' => CategoryProduct::all(),
+            'materials' => MaterialProduct::all()
         ]);
     }
 
@@ -32,7 +39,21 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        DB::beginTransaction();
+        try {
+            Validator::make($request->all(), [
+                'name' => ['required', 'string', 'max:100'],
+                'type_product_id' => ['required', 'exists:type_products,id'],
+                'category_product_id' => ['required', 'exists:category_products,id'],
+                'material_product_id' => ['required', 'exists:material_products,id'],
+                'description' => ['required', 'string', 'max:250'],
+            ])->validate();
+            Product::create($request->all());
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['message' => $e->getMessage()], 400);
+        }
     }
 
     /**
@@ -56,7 +77,21 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        DB::beginTransaction();
+        try {
+            Validator::make($request->all(), [
+                'name' => ['required', 'string', 'max:100'],
+                'type_product_id' => ['required', 'exists:type_products,id'],
+                'category_product_id' => ['required', 'exists:category_products,id'],
+                'material_product_id' => ['required', 'exists:material_products,id'],
+                'description' => ['required', 'string', 'max:250'],
+            ])->validate();
+            $product->update($request->all());
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['message' => $e->getMessage()], 400);
+        }
     }
 
     /**

@@ -5,7 +5,7 @@ defineProps({
 </script>
 
 <template>
-    <label class="block mb-2 font-medium text-sm">
+    <label class="mb-2 block text-sm font-medium">
         {{ value }}
     </label>
 </template>

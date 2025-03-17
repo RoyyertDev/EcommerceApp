@@ -3,11 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Product extends Model
 {
-    protected $table = 'products';
-
     protected $fillable = [
         'name',
         'description',
@@ -15,6 +14,17 @@ class Product extends Model
         'category_product_id',
         'material_product_id',
     ];
+
+    public $incrementing = false; // Desactiva autoincremento
+    protected $keyType = 'string'; // Define la clave primaria como string
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function ($model) {
+            $model->{$model->getKeyName()} = Str::uuid()->toString();
+        });
+    }
 
     public function typeProduct()
     {
