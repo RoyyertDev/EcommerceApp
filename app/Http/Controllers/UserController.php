@@ -39,7 +39,6 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        
         DB::beginTransaction();
         try {
                 Validator::make($request->all(), [
@@ -58,7 +57,7 @@ class UserController extends Controller
                 // 'phone' => ['required', 'string', 'max:15'],
                 'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
             ])->validate();
-                $user = User::create([
+            $user = User::create([
                 'names' => Str::upper($request['names']),
                 'surnames' => Str::upper($request['surnames']),
                 'identification_document' => $request['identification_document'],
@@ -81,12 +80,14 @@ class UserController extends Controller
                 // 'zip_code' => $request['zip_code'],
                 // 'site_reference' => $request['site_reference'],
                 // 'phone' => $request['phoneCode'].$request['phone']
-            ]);          DB::commit();
-            /* event(new Registered($user)); */
-            /* return to_route('dashboard'); */
+            ]);
+            DB::commit();
+            //event(new Registered($user));
+            return to_route('dashboard');
             } catch (\Exception $e) {
             DB::rollBack();
-            return back()->with('error', $e->getMessage());
+            dd($e->getMessage());
+            /* return back()->with('error', $e->getMessage()); */
         }
     }
     /**
