@@ -3,10 +3,10 @@ import ButtonRegisterAdmin from '@/components/myComponents/ButtonRegisterAdmin.v
 import DialogModal from '@/components/DialogModal.vue';
 import InputLabel from '@/components/InputLabel.vue';
 import TextInput from '@/components/TextInput.vue';
+import Select from '@/components/Select.vue';
 
 import { useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
-import Password from '@/pages/settings/Password.vue';
 
 const open = ref(false);
 
@@ -16,23 +16,23 @@ const toggleOpen = () =>{
 };
 
 const form = useForm({
-  name: '',
-  surnames: '',
-  identification_document: '',
-  email: '',
-  password: '',
-  gender: '',
-  terms: '',
+    names: '',
+    surnames: '',
+    identification_document: '',
+    email: '',
+    password: '',
+    gender: '',
+    terms: '',
 });
 
 const submit = () => {
-    /* if (!form.name || !form.surnames || !form.identification_document || !form.email || !form.phone) {
+    /* if (!form.names || !form.surnames || !form.identification_document || !form.email || !form.phone) {
         return alert('Todos los campos son requeridos');
     } */
     form.post(route('admin.users.store'), {
         onFinish: () => {
             toggleOpen();
-            return redirect(route('admin.users.create'));
+            return redirect(route('admin.users.create')); // Redirecciona a la página de creación de usuarios
         },
     });
 
@@ -46,11 +46,11 @@ const submit = () => {
         <template #content>
             <form class="flex flex-col gap-4">
                 <div class="flex flex-col gap-2">
-                    <InputLabel for="name" value="Nombre" />
+                    <InputLabel for="names" value="Nombre" />
                     <TextInput
-                        v-model="form.name"
+                        v-model="form.names"
                         type="text"
-                        id="name"
+                        id="names"
                         class="h-9 rounded-lg border-gray-300 bg-gray-200 text-sm text-black focus:border-gray-300 focus:ring-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:focus:border-zinc-700"
                         placeholder="eg.  Lo Esencial Shop VE"
                     />
@@ -63,7 +63,7 @@ const submit = () => {
                         type="text"
                         id="surnames"
                         class="h-9 rounded-lg border-gray-300 bg-gray-200 text-sm text-black focus:border-gray-300 focus:ring-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:focus:border-zinc-700"
-                        placeholder="eg.  Lo Esencial Shop VE"
+                        placeholder="e.g Compromiso Calidad"
                     />
                     <!-- <x-TextInput-error for="surnames" /> -->
                 </div>
@@ -74,7 +74,7 @@ const submit = () => {
                         id="identification_document"
                         type="text"
                         class="h-9 rounded-lg border-gray-300 bg-gray-200 text-sm text-black focus:border-gray-300 focus:ring-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:focus:border-zinc-700"
-                        placeholder="eg.  Lo Esencial Shop VE"
+                        placeholder="DNI o NIE"
                     />
                     <!-- <x-TextInput-error for="identification_document" /> -->
                 </div>
@@ -85,22 +85,26 @@ const submit = () => {
                         type="email"
                         id="email"
                         class="h-9 rounded-lg border-gray-300 bg-gray-200 text-sm text-black focus:border-gray-300 focus:ring-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:focus:border-zinc-700"
-                        placeholder="DNI"
+                        placeholder="jirehimport@jirehimport.com"
                     />
                     <!-- <x-TextInput-error for="email" /> -->
                 </div>
-                
                 <div class="flex flex-col gap-2">
-                    <InputLabel for="phone" value="Telefono" />
-                    <TextInput
-                        v-model="form.phone"
-                        type="phoneCode"
-                        id="phoneCode"
-                        class="h-9 rounded-lg border-gray-300 bg-gray-200 text-sm text-black focus:border-gray-300 focus:ring-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:focus:border-zinc-700"
-                        placeholder="+58"
-                    />
-                    <!-- <x-TextInput-error for="phone" /> -->
+                    <InputLabel for="password" value="Confirmar contraseña" />
+                    <TextInput v-model="form.password" type="password" id="password"
+                        class="bg-gray-200 dark:bg-zinc-800 rounded-lg border-gray-300 dark:border-zinc-700 h-9 text-black dark:text-white text-sm focus:border-gray-300 dark:focus:border-zinc-700 focus:ring-transparent"
+                        placeholder="******" />
                 </div>
+                <!-- <x-TextInput-error for="password" /> -->
+                <div class="flex flex-col gap-2">
+                    <InputLabel for="gender" value="Sexo" />
+                    <Select v-model="form.gender" id="gender"
+                        class="cursor-pointer bg-gray-200 dark:bg-zinc-800 rounded-lg border-gray-300 dark:border-zinc-700 h-9 text-black dark:text-white text-sm focus:border-gray-300 dark:focus:border-zinc-700 focus:ring-transparent">
+                        <option value="Masculino">Masculino</option>
+                        <option value="Femenino">Femenino</option>
+                    </Select>
+                </div>
+                <!-- <x-TextInput-error for="gender" /> -->
                 
             </form>
         </template>

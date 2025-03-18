@@ -39,10 +39,10 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
-       /*  DB::beginTransaction();
-        try { */
-            /* Validator::make($request->all(), [
+        
+        DB::beginTransaction();
+        try {
+                Validator::make($request->all(), [
                 'names' => ['required', 'string', 'max:255'],
                 'surnames' => ['required', 'string', 'max:255'],
                 'identification_document' => ['required', 'string', 'max:255', 'unique:users'],
@@ -58,16 +58,14 @@ class UserController extends Controller
                 // 'phone' => ['required', 'string', 'max:15'],
                 'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
             ])->validate();
- */
-            /* $user = User::create([
+                $user = User::create([
                 'names' => Str::upper($request['names']),
                 'surnames' => Str::upper($request['surnames']),
                 'identification_document' => $request['identification_document'],
                 'email' => $request['email'],
                 'password' => Hash::make($request['password']),
                 'gender' => $request['gender']
-            ]); */
-/* 
+            ]);
             UserDetail::create([
                 'user_id' => $user->id,
                 'role_id' => RoleUser::where('name', 'admin')->first()->id,
@@ -83,16 +81,14 @@ class UserController extends Controller
                 // 'zip_code' => $request['zip_code'],
                 // 'site_reference' => $request['site_reference'],
                 // 'phone' => $request['phoneCode'].$request['phone']
-            ]);
- */
-/*             DB::commit();
+            ]);          DB::commit();
             /* event(new Registered($user)); */
             /* return to_route('dashboard'); */
-       /*  } catch (\Exception $e) {
+            } catch (\Exception $e) {
             DB::rollBack();
             return back()->with('error', $e->getMessage());
-        } */
-    } 
+        }
+    }
     /**
      * Display the specified resource.
      */
