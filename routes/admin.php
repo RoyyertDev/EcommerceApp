@@ -11,6 +11,7 @@ Route::get('/dashboard', function () {
 })->name('dashboard');
 
 Route::get('/users', [UserController::class, 'create'])->name('users.create');
+Route::post('/users', [UserController::class, 'store'])->name('users.store');
 
 Route::get('/products', [ProductController::class, 'create'])->name('products.create');
 Route::post('/products', [ProductController::class, 'store'])->name('products.store');
