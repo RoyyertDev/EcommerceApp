@@ -12,6 +12,8 @@ Route::get('/dashboard', function () {
 
 Route::get('/users', [UserController::class, 'create'])->name('users.create');
 Route::post('/users', [UserController::class, 'store'])->name('users.store');
+Route::get('/users/{user}',[UserController::class, 'create'])->name('users.read');
+Route::put('/users/{user}', [ProductController::class, 'update'])->name('users.update');
 
 Route::get('/products', [ProductController::class, 'create'])->name('products.create');
 Route::post('/products', [ProductController::class, 'store'])->name('products.store');
