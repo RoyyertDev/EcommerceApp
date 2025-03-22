@@ -42,7 +42,7 @@ const submit = () => {
     <ButtonUpdateAdmin @click="toggleOpen">Actualizar</ButtonUpdateAdmin>
     <DialogModal :show="open">
         <template #title>
-            {{ names + ' ' + surnames }}
+            {{ user.names + ' ' + user.surnames }}
         </template>
         <template #content>
             <form class="grid grid-cols-2 gap-4">
@@ -120,7 +120,6 @@ const submit = () => {
                         id="province"
                         class="h-9 cursor-pointer rounded-lg border-gray-300 bg-gray-200 text-sm text-black focus:border-gray-300 focus:ring-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:focus:border-zinc-700"
                     >
-                        <option Selected disabled value="">Seleccione</option>
                         <option v-for="(province, index) in provinces" :key="index" :value="province['state_name']">
                             {{ province['state_name'] }}
                         </option>
@@ -134,7 +133,6 @@ const submit = () => {
                         id="city"
                         class="h-9 cursor-pointer rounded-lg border-gray-300 bg-gray-200 text-sm text-black focus:border-gray-300 focus:ring-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:focus:border-zinc-700"
                     >
-                        <option Selected disabled value="">Seleccione</option>
                         <option v-for="(city, index) in cities" :key="index" :value="city['city_name']">{{ city['city_name'] }}</option>
                     </Select>
                     <!-- <x-TextInput-error for="city" /> -->

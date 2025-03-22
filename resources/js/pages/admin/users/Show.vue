@@ -131,8 +131,8 @@ const filter = ref('');
 									</li>
 								</td>
 								<td class="flex h-12 gap-2">
-									<UpdateView :user="user" :key="'update -' + user.id"  />
 									<Read :user="user" :key="'read -' + user.id" />
+									<UpdateView :user="user" :key="'update -' + user.id"  />
 								</td>
 							</tr>
 						</tbody>

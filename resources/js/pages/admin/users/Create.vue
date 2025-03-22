@@ -118,15 +118,15 @@ const submit = () => {
                     <fieldset class="grid w-full shrink-0 grid-cols-2 gap-x-4 gap-y-6">
                         <div>
                             <InputLabel for="country" value="Pais" />
-                            <Select v-model="form.country" name="country" id="country"> </Select>
+                            <Select v-model="form.country" name="country" id="country" class="h-9 cursor-pointer rounded-lg border-gray-300 bg-gray-200 text-sm text-black focus:border-gray-300 focus:ring-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:focus:border-zinc-700"> </Select>
                         </div>
                         <div>
                             <InputLabel for="province" value="Estado" />
-                            <Select v-model="form.province" name="province" id="province"> </Select>
+                            <Select v-model="form.province" name="province" id="province" class="h-9 cursor-pointer rounded-lg border-gray-300 bg-gray-200 text-sm text-black focus:border-gray-300 focus:ring-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:focus:border-zinc-700"> </Select>
                         </div>
                         <div>
                             <InputLabel for="city" value="Ciudad" />
-                            <Select v-model="form.city" name="city" id="city"> </Select>
+                            <Select v-model="form.city" name="city" id="city" class="h-9 cursor-pointer rounded-lg border-gray-300 bg-gray-200 text-sm text-black focus:border-gray-300 focus:ring-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:focus:border-zinc-700"    > </Select>
                         </div>
                         <div>
                             <InputLabel for="zip_code" value="Codigo postal" />
@@ -144,10 +144,10 @@ const submit = () => {
                             <InputLabel for="phone" value="Telefono" />
                             <div class="grid grid-cols-[15%_1fr] items-center gap-2">
                                 <TextInput v-model="form.phone" placeholder="+1" readonly id="phoneCode"
-                                    class="mt-1 block w-full" type="text" name="phoneCode" required
+                                class="h-9 rounded-r-lg border-gray-300 bg-gray-200 text-sm text-black focus:border-gray-300 focus:ring-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:focus:border-zinc-700" type="text" name="phoneCode" required
                                     autocomplete="phoneCode" />
                                 <TextInput v-model="form.phone" placeholder="Telefono" id="phone"
-                                    class="mt-1 block w-full" type="number" name="phone" required
+                                class="h-9 rounded-r-lg border-gray-300 bg-gray-200 text-sm text-black focus:border-gray-300 focus:ring-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:focus:border-zinc-700" type="number" name="phone" required
                                     autocomplete="phone" />
                             </div>
                         </div>
