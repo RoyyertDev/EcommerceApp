@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\UserDetail;
 use App\Models\RoleUser;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Laravel\Jetstream\Jetstream;
 use Illuminate\Validation\Rules;
 
@@ -109,9 +110,50 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $User)
+    public function update(Request $request, User $user)
     {
-        //
+        DB::beginTransaction();
+        try {
+                Validator::make($request->all(), [
+                'names' => ['required', 'string', 'max:255'],
+                'surnames' => ['required', 'string', 'max:255'],
+                'identification_document' => ['required', 'string', 'max:255', Rule::unique('users')->ignore($user->id)],
+                'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
+                'gender' => ['required', 'boolean'],
+                // 'country' => ['required', 'string', 'max:100'],
+                // 'province' => ['required', 'string', 'max:100'],
+                // 'city' => ['required', 'string', 'max:100'],
+                // 'zip_code' => ['required', 'string', 'max:20'],
+                // 'site_reference' => ['required', 'string', 'max:250'],
+                // 'phoneCode' => ['required', 'string', 'max:5'],
+                // 'phone' => ['required', 'string', 'max:15'],
+                'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
+            ])->validate();
+            $user->update([
+                'names' => Str::upper($request['names']),
+                'surnames' => Str::upper($request['surnames']),
+                'identification_document' => $request['identification_document'],
+                'email' => $request['email'],
+                'gender' => $request['gender']
+            ]);
+            $user->save();
+            $userDetail = UserDetail::where('user_id', $user->id)->first();
+            $userDetail->update([
+                'country' => 'Venezuela',
+                'province' => 'Aragua',
+                'city' => 'Maracay',
+                'zip_code' => '2700',
+                'site_reference' => 'Maracay',
+                'phone' => '+584140000000'
+            ]);
+            $userDetail->save();
+            DB::commit();
+            //event(new Registered($user));
+            } catch (\Exception $e) {
+            DB::rollBack();
+            dd($e);
+            /* return back()->with('error', $e->getMessage()); */
+        }
     }
 
     /**
