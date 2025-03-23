@@ -8,7 +8,7 @@ Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
     ]);
-});
+})->name('home');
 
 Route::get('/about', function () {
     return Inertia::render('About', [
