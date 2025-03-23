@@ -2,6 +2,7 @@
 import { Link, usePage } from '@inertiajs/vue3';
 import { onMounted, ref } from 'vue';
 import LinksNav from '../myComponents/LinksNav.vue';
+import ToggleTheme from './ToggleTheme.vue';
 
 defineProps({
     canLogin: {
@@ -13,9 +14,6 @@ let navOpen = ref(false),
 function toggleNav() {
     navOpen.value = !navOpen.value;
 }
-const toggleTheme = () => {
-    document.documentElement.classList.toggle('dark');
-};
 const authUser = usePage().props.auth.user;
 const roleAdmin = usePage().props.roleAdmin;
 onMounted(() => {
@@ -26,7 +24,7 @@ onMounted(() => {
 </script>
 <template>
     <header
-        class="sticky top-0 z-10 mb-4 h-14 w-full rounded-b-3xl bg-white px-7 shadow-[#DE5976] transition-all duration-500 md:px-14 lg:px-28 dark:bg-black"
+        class="sticky top-0 z-10 mb-4 h-14 w-full rounded-b-3xl bg-white px-7 shadow-[#DE5976] transition-all duration-500 dark:bg-black md:px-14 lg:px-28"
         :class="{ 'shadow-[0_4px_5px_-4px]': scrolled || navOpen }"
     >
         <nav
@@ -46,12 +44,7 @@ onMounted(() => {
                 <LinksNav route="/about" href="/about">Nosotros</LinksNav>
                 <LinksNav route="" href="/">Productos</LinksNav>
                 <LinksNav route="" href="/">Carrito</LinksNav>
-                <label class="inline-flex cursor-pointer items-center">
-                    <input @click="toggleTheme" id="dark-mode-toggle" type="checkbox" class="peer sr-only" />
-                    <div
-                        class="relative h-6 w-11 rounded-full bg-gray-200 duration-300 after:absolute after:start-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:bg-black after:transition-all after:duration-300 after:content-[''] peer-checked:bg-[#0e0e0e] peer-checked:after:translate-x-full peer-checked:after:bg-white rtl:peer-checked:after:-translate-x-full"
-                    ></div>
-                </label>
+                <ToggleTheme />
             </div>
             <div class="flex items-center justify-center gap-4" v-if="canLogin">
                 <LinksNav v-if="authUser" :href="route(authUser.detail && authUser.detail.role_id === roleAdmin ? 'admin.dashboard' : 'dashboard')">{{

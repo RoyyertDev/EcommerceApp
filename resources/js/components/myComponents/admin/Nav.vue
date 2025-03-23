@@ -2,6 +2,7 @@
 import Dropdown from '@/components/Dropdown.vue';
 import DropdownLink from '@/components/DropdownLink.vue';
 import NavLink from '@/components/NavLink.vue';
+import ToggleTheme from '@/components/partials/ToggleTheme.vue';
 import ResponsiveNavLink from '@/components/ResponsiveNavLink.vue';
 import { Link, router, usePage } from '@inertiajs/vue3';
 import { ref } from 'vue';
@@ -44,6 +45,7 @@ const logout = () => {
                         <NavLink :href="route('admin.users.create')" :active="route().current('admin.users.create')"> Usuarios </NavLink>
                         <NavLink :href="route('admin.products.create')" :active="route().current('admin.products.create')"> Productos </NavLink>
                         <NavLink :href="route('admin.landing')" :active="route().current('admin.landing')"> Landing </NavLink>
+                        <ToggleTheme />
                     </div>
                 </div>
 
