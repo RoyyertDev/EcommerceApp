@@ -94,7 +94,7 @@ const props = defineProps({
                         <td class="flex h-12 w-28 gap-2">
                             <Link
                                 v-key="variant - product.id"
-                                :href="route('admin.product.variant', product.id)"
+                                :href="route('admin.variants.create', product.id)"
                                 class="flex items-center justify-center gap-1 text-green-600 transition-all duration-300 hover:scale-110"
                             >
                                 <svg fill="#16a34a" xmlns="http://www.w3.org/2000/svg" height="20px" id="icon" viewBox="0 0 32 32" width="20px">

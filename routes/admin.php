@@ -18,7 +18,9 @@ Route::put('/users/{user}', [UserController::class, 'update'])->name('users.upda
 Route::get('/products', [ProductController::class, 'create'])->name('products.create');
 Route::post('/products', [ProductController::class, 'store'])->name('products.store');
 Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
-Route::get('/products/variant/{product}', [VariantController::class, 'create'])->name('product.variant');
+
+Route::get('/products/variant/{product}', [VariantController::class, 'create'])->name('variants.create');
+Route::post('/products/variant/{product}', [VariantController::class, 'store'])->name('variants.store');
 
 Route::get('/landing', function (){
     return Inertia::render('admin/Landing');

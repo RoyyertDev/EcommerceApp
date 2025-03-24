@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Characteristic;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class CharacteristicController extends Controller
 {
@@ -26,9 +28,24 @@ class CharacteristicController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public static function store(Array $request)
     {
-        //
+        DB::beginTransaction();
+        try {
+            Validator::make($request, [
+                'color_sticky_id' => ['required', 'exists:color_sticky,id'],
+                'size_id' => ['required', 'exists:sizes,id'],
+            ])->validate();
+            $characteristic = Characteristic::create([
+                'color_sticky_id' => $request['color_sticky_id'],
+                'size_id' => $request['size_id']
+            ]);
+            DB::commit();
+            return $characteristic->id;
+        } catch (\Exception $e) {
+            DB::rollBack();
+            dd($e);
+        }
     }
 
     /**

@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Color;
 use App\Models\Product;
+use App\Models\Size;
+use App\Models\Sticky;
 use App\Models\Variant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 
 class VariantController extends Controller
@@ -14,7 +19,12 @@ class VariantController extends Controller
      */
     public function index($product)
     {
-        return Variant::with('product', 'characteristic')->where('product_id', $product)->get();
+        return Variant::with([
+            'product',
+            'characteristic.colorSticky.color',
+            'characteristic.colorSticky.sticky',
+            'characteristic.size',
+        ])->where('product_id', $product)->get();
     }
 
     /**
@@ -22,18 +32,57 @@ class VariantController extends Controller
      */
     public function create(Product $product)
     {
+        $stickies = Sticky::all();
+        $colors = Color::all();
+        $sizes = Size::all();
         return Inertia::render('admin/variants/Show', [
             'variants' => $this->index($product->id),
-            'product' => $product->name,
+            'product' => $product,
+            'stickies' => $stickies,
+            'colors' => $colors,
+            'sizes' => $sizes
         ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, Product $product)
     {
-        //
+        DB::beginTransaction();
+        try {
+            Validator::make($request->all(), [
+                'sticky' => ['required', 'exists:stickies,id'],
+                'color' => ['required', 'exists:colors,id'],
+                'size' => ['required', 'exists:sizes,id'],
+                'image' => ['required'],
+                'price' => ['required', 'numeric', 'min:0'],
+                'stock' => ['required', 'numeric', 'min:0', 'integer'],
+                'promotion' => ['required', 'boolean'],
+                'discount' => ['required', 'numeric'],
+            ])->validate();
+            $color_sticky_id = ColorStickyController::store([
+                'sticky_id' => $request['sticky'],
+                'color_id' => $request['color'],
+            ]);
+            $characteristic_id = CharacteristicController::store([
+                'color_sticky_id' => $color_sticky_id,
+                'size_id' => $request['size']
+            ]);
+            Variant::create([
+                'product_id' => $product->id,
+                'characteristic_id' => $characteristic_id,
+                'image' => $request['image'],
+                'price' => $request['price'],
+                'stock' => $request['stock'],
+                'promotion' => $request['promotion'],
+                'discount' => $request['discount'],
+            ]);
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return dd($e);
+        }
     }
 
     /**

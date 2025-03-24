@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('image', 250)->notNullable();
             $table->decimal('price', 10, 2)->notNullable();
             $table->integer('stock')->notNullable();
-            $table->integer('number_sales')->notNullable();
+            $table->integer('number_sales')->notNullable()->default(0);
             $table->boolean('promotion')->notNullable();
             $table->float('discount')->notNullable();
             $table->timestamps();
