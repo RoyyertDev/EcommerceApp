@@ -21,7 +21,7 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public static function index()
     {
         return User::with('detail')->get();
     }
@@ -32,7 +32,7 @@ class UserController extends Controller
     public function create()
     {
         $users = $this->index();
-        return Inertia::render('admin/users/Show', ['users'=>$users]);
+        return Inertia::render('admin/users/Show', ['users' => $users]);
     }
 
     /**

@@ -17,7 +17,12 @@ class VariantController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index($product)
+    public static function index()
+    {
+        return Variant::all();
+    }
+
+    public function indexForProducts($product)
     {
         return Variant::with([
             'product',
@@ -36,7 +41,7 @@ class VariantController extends Controller
         $colors = Color::all();
         $sizes = Size::all();
         return Inertia::render('admin/variants/Show', [
-            'variants' => $this->index($product->id),
+            'variants' => $this->indexForProducts($product->id),
             'product' => $product,
             'stickies' => $stickies,
             'colors' => $colors,

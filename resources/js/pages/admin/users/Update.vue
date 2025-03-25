@@ -24,6 +24,9 @@ const form = useForm({
     identification_document: user.identification_document,
     email: user.email,
     gender: user.gender,
+    zip_code: user.detail.zip_code,
+    site_reference: user.detail.site_reference,
+    phone: user.detail.phone,
 });
 
 const submit = () => {
@@ -172,7 +175,7 @@ const submit = () => {
                         />
                         <TextInput
                             v-model="form.phone"
-                            type="number"
+                            type="text"
                             id="phone"
                             class="h-9 rounded-r-lg border-gray-300 bg-gray-200 text-sm text-black focus:border-gray-300 focus:ring-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:focus:border-zinc-700"
                             placeholder="Teléfono"

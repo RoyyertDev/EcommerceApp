@@ -157,7 +157,7 @@ const submit = () => {
             </form>
         </template>
         <template #footer>
-            <button @click="form.reset()" class="mr-2 rounded-md bg-blue-800 px-2 py-2 text-white">Limpiar campos</button>
+            <button @click="(form.reset(), formCard = 0)" class="mr-2 rounded-md bg-blue-800 px-2 py-2 text-white">Limpiar campos</button>
             <button @click="toggleOpen" class="mr-2 rounded-md bg-red-800 px-2 py-2 text-white">Cancelar</button>
             <button @click="formCard = 0" v-if="formCard === 1" class="rounded-md bg-[#DE5976] px-2 py-2 text-white">Anterior</button>
             <button @click="submit" class="rounded-md bg-[#DE5976] px-2 py-2 text-white">{{ formCard === 0 ? 'Siguiente' : 'Registrar' }}</button>

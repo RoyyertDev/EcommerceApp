@@ -1,19 +1,18 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\VariantController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/dashboard', function () {
-    return Inertia::render('admin/Dashboard');
-})->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'create'])->name('dashboard.create');
 
 Route::get('/users', [UserController::class, 'create'])->name('users.create');
 Route::post('/users', [UserController::class, 'store'])->name('users.store');
 Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
-// Route::get('/users/{user}',[UserController::class, 'create'])->name('users.read');
+
 
 Route::get('/products', [ProductController::class, 'create'])->name('products.create');
 Route::post('/products', [ProductController::class, 'store'])->name('products.store');

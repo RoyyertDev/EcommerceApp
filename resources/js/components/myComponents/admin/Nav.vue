@@ -34,14 +34,14 @@ const logout = () => {
                 <div class="flex">
                     <!-- Logo -->
                     <div class="flex shrink-0 items-center">
-                        <Link :href="route('admin.dashboard')">
+                        <Link :href="route('home')">
                             <img class="m-auto" src="/img/logo.png" width="80px" height="40px" alt="JirehImport logo" />
                         </Link>
                     </div>
 
                     <!-- Navigation Links -->
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        <NavLink :href="route('admin.dashboard')" :active="route().current('admin.dashboard')"> Inicio </NavLink>
+                        <NavLink :href="route('admin.dashboard.create')" :active="route().current('admin.dashboard.create')"> Inicio </NavLink>
                         <NavLink :href="route('admin.users.create')" :active="route().current('admin.users.create')"> Usuarios </NavLink>
                         <NavLink :href="route('admin.products.create')" :active="route().current('admin.products.create')"> Productos </NavLink>
                         <NavLink :href="route('admin.landing')" :active="route().current('admin.landing')"> Landing </NavLink>
@@ -49,7 +49,7 @@ const logout = () => {
                     </div>
                 </div>
 
-                <div class="hidden sm:ms-6 sm:flex sm:items-center">
+                <div class=" sm:ms-6 sm:flex sm:items-center">
                     <!-- Teams Dropdown -->
                     <div class="relative ms-3">
                         <Dropdown v-if="$page.props.jetstream.hasTeamFeatures" align="right" width="60">

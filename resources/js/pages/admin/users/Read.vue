@@ -1,5 +1,6 @@
 <script setup>
 import DialogModal from '@/components/DialogModal.vue';
+import { usePage } from '@inertiajs/vue3';
 
 import { ref } from 'vue';
 
@@ -12,6 +13,8 @@ const toggleOpen = () => {
 defineProps({
     user: Object
 })
+
+const roleAdmin = usePage().props.roleAdmin;
 </script>
 <template>
     <button @click="toggleOpen"
@@ -41,21 +44,18 @@ defineProps({
                     Correo electronico: {{ user.email }}
                 </div>
                 <div>
-                    Sexo: {{ user.sex }}
+                    Sexo: {{ user.gender === 0 ? 'Masculino' : user.gender === 1 ? 'Femenino' : 'Anomalidad' }}
                 </div>
                 <div>
                     Teléfono: {{ user.detail.phone ?? '' }}
                 </div>
                 <div>
                     Rol:
-                    <span v-if="user.detail.fk_role === 1">
+                    <span v-if="user.detail.role_id === roleAdmin">
                         Administrador
                     </span>
-                    <span v-else-if="user.detail.fk_role === 0">
-                        Cliente
-                    </span>
                     <span v-else>
-                        Sin Rol
+                        Usuario
                     </span>
                 </div>
                 <div>

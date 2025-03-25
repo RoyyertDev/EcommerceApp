@@ -2,50 +2,54 @@
 import Widget from '@/components/myComponents/admin/dashboard/Widget.vue';
 import AdminLayout from '@/layouts/admin/AdminLayout.vue';
 
+const props = defineProps({
+    widgetCount: Object,
+})
+console.log(props.widgetCount)
 const widgetInfo = [
     {
         title: 'Clientes',
-        h4: '0',
+        h4: props.widgetCount.users,
         icon: '/svg/admin/dashboard/clients.svg',
     },
     {
         title: 'Productos',
-        h4: '0',
+        h4: props.widgetCount.products,
         icon: '/svg/admin/dashboard/products.svg',
     },
     {
         title: 'Variantes',
-        h4: '0',
+        h4: props.widgetCount.variants,
         icon: '/svg/admin/dashboard/variants.svg',
     },
     {
         title: 'Tipos de productos',
-        h4: '0',
+        h4: props.widgetCount.typeProducts,
         icon: '/svg/admin/dashboard/typeProducts.svg',
     },
     {
         title: 'Categorias de productos',
-        h4: '0',
+        h4: props.widgetCount.categoryProducts,
         icon: '/svg/admin/dashboard/categoryProducts.svg',
     },
     {
         title: 'Materiales de productos',
-        h4: '0',
+        h4: props.widgetCount.materialProducts,
         icon: '/svg/admin/dashboard/materialProducts.svg',
     },
     {
         title: 'Colores',
-        h4: '0',
+        h4: props.widgetCount.colors,
         icon: '/svg/admin/dashboard/colors.svg',
     },
     {
         title: 'Tallas',
-        h4: '0',
+        h4: props.widgetCount.sizes,
         icon: '/svg/admin/dashboard/sizes.svg',
     },
     {
         title: 'Stickies',
-        h4: '0',
+        h4: props.widgetCount.stickies,
         icon: '/svg/admin/dashboard/stickys.svg',
     },
 ];

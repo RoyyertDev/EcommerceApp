@@ -10,9 +10,9 @@ class StickyController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public static function index()
     {
-        //
+        return Sticky::all();
     }
 
     /**

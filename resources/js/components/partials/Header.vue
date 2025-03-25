@@ -47,7 +47,7 @@ onMounted(() => {
                 <ToggleTheme />
             </div>
             <div class="flex items-center justify-center gap-4" v-if="canLogin">
-                <LinksNav v-if="authUser" :href="route(authUser.detail && authUser.detail.role_id === roleAdmin ? 'admin.dashboard' : 'dashboard')">{{
+                <LinksNav v-if="authUser" :href="route(authUser.detail && authUser.detail.role_id === roleAdmin ? 'admin.dashboard.create' : 'dashboard')">{{
                     authUser.names
                 }}</LinksNav>
                 <LinksNav v-else route="/login" :href="route('login')">Acceder</LinksNav>
