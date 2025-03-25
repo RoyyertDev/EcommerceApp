@@ -36,9 +36,9 @@ const props = defineProps({
 });
 
 const submit = () => {
-    // if (!form.sticky || !form.color || !form.size || !form.price || !form.stock) {
-    //     return alert('Todos los campos son requeridos');
-    // }
+    if (!form.sticky || !form.color || !form.size || !form.price || !form.stock) {
+        return alert('Todos los campos son requeridos');
+    }
     form.post(route('admin.variants.store', props.product.id), {
         onFinish: () => {
             toggleOpen();

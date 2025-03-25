@@ -2,6 +2,7 @@
 import DivTable from '@/components/myComponents/DivTable.vue';
 import AdminLayout from '@/layouts/admin/AdminLayout.vue';
 import CreateView from '@/pages/admin/variants/Create.vue';
+import UpdateView from '@/pages/admin/variants/Update.vue';
 
 const props = defineProps({
     variants: Object,
@@ -81,65 +82,11 @@ const props = defineProps({
                         <td class="">{{ variant.stock }}</td>
                         <td class="">{{ variant.number_sales }}</td>
                         <td class="">
-                            <svg
-                                v-if="variant.promotion"
-                                xmlns="http://www.w3.org/2000/svg"
-                                x="0px"
-                                y="0px"
-                                width="20px"
-                                height="20px"
-                                viewBox="0,0,256,256"
-                            >
-                                <g
-                                    fill="#22c600"
-                                    fill-rule="nonzero"
-                                    stroke="none"
-                                    stroke-width="1"
-                                    stroke-linecap="butt"
-                                    stroke-linejoin="miter"
-                                    stroke-miterlimit="10"
-                                    stroke-dasharray=""
-                                    stroke-dashoffset="0"
-                                    font-family="none"
-                                    font-weight="none"
-                                    font-size="none"
-                                    text-anchor="none"
-                                    style="mix-blend-mode: normal"
-                                >
-                                    <g transform="scale(9.84615,9.84615)">
-                                        <path
-                                            d="M13,1c-6.61719,0 -12,5.38281 -12,12c0,6.61719 5.38281,12 12,12c6.61719,0 12,-5.38281 12,-12c0,-6.61719 -5.38281,-12 -12,-12zM13,3c5.53516,0 10,4.46484 10,10c0,5.53516 -4.46484,10 -10,10c-5.53516,0 -10,-4.46484 -10,-10c0,-5.53516 4.46484,-10 10,-10zM17.1875,7.0625c-0.14844,0.02344 -0.27344,0.10156 -0.375,0.25l-4.90625,7.28125l-2.3125,-2.28125c-0.19922,-0.30078 -0.58203,-0.32422 -0.78125,-0.125l-0.90625,0.90625c-0.19922,0.30078 -0.19922,0.70703 0,0.90625l3.5,3.5c0.19922,0.10156 0.48047,0.3125 0.78125,0.3125c0.19922,0 0.51953,-0.10547 0.71875,-0.40625l6,-8.8125c0.19922,-0.30078 0.08594,-0.58203 -0.3125,-0.78125l-1,-0.71875c-0.10156,-0.05078 -0.25781,-0.05469 -0.40625,-0.03125z"
-                                        ></path>
-                                    </g>
-                                </g>
-                            </svg>
-                            <svg v-else xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20px" height="20px" viewBox="0,0,256,256">
-                                <g
-                                    fill="#FF311D"
-                                    fill-rule="nonzero"
-                                    stroke="none"
-                                    stroke-width="1"
-                                    stroke-linecap="butt"
-                                    stroke-linejoin="miter"
-                                    stroke-miterlimit="10"
-                                    stroke-dasharray=""
-                                    stroke-dashoffset="0"
-                                    font-family="none"
-                                    font-weight="none"
-                                    font-size="none"
-                                    text-anchor="none"
-                                    style="mix-blend-mode: normal"
-                                >
-                                    <g transform="scale(10.66667,10.66667)">
-                                        <path
-                                            d="M12,2c-5.511,0 -10,4.489 -10,10c0,5.511 4.489,10 10,10c5.511,0 10,-4.489 10,-10c0,-5.511 -4.489,-10 -10,-10zM12,4c4.43012,0 8,3.56988 8,8c0,4.43012 -3.56988,8 -8,8c-4.43012,0 -8,-3.56988 -8,-8c0,-4.43012 3.56988,-8 8,-8zM8.70703,7.29297l-1.41406,1.41406l3.29297,3.29297l-3.29297,3.29297l1.41406,1.41406l3.29297,-3.29297l3.29297,3.29297l1.41406,-1.41406l-3.29297,-3.29297l3.29297,-3.29297l-1.41406,-1.41406l-3.29297,3.29297z"
-                                        ></path>
-                                    </g>
-                                </g>
-                            </svg>
+                            <img :src="'/svg/admin/variants/' + (variant.promotion ? 'checked.svg' : 'notChecked.svg')" alt="" />
                         </td>
                         <td class="">{{ variant.discount }}%</td>
                         <td class="">{{ variant.created_at }}</td>
+                        <UpdateView :variant="variant" />
                         <!-- <td class="">@livewire('admin.variants.update', ['id' => variant->id], key('update-' . variant->id))</td> -->
                     </tr>
                 </template>
