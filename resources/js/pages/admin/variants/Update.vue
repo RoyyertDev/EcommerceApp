@@ -8,28 +8,27 @@ import { useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
 const open = ref(false);
-
 const props = defineProps({
     variant: Object,
+    colors: Array,
+    sizes: Array,
+    stickies: Array,
 });
-const colorView2 = ref(null);
-
+const color = ref(props.variant.characteristic.color_sticky.color.hexadecimal);
 const form = useForm({
-    sticky: props.variant.sticky,
-    color: props.variant.color,
-    size: props.variant.size,
+    sticky: props.variant.characteristic.color_sticky.sticky.id,
+    color: props.variant.characteristic.color_sticky.color.id,
+    size: props.variant.characteristic.size.id,
     image: null,
     price: props.variant.price,
     stock: props.variant.stock,
     discount: props.variant.discount,
     promotion: props.variant.promotion,
 });
-
 const toggleOpen = () => {
     open.value = !open.value;
     form.reset();
 };
-
 const submit = () => {
     // if (!form.sticky || !form.color || !form.size || !form.price || !form.stock) {
     //     return alert('Todos los campos son requeridos');
@@ -40,6 +39,9 @@ const submit = () => {
             return redirect(route('admin.variants.create', props.product.id));
         },
     });
+};
+const handleColor = (id) => {
+    color.value = props.colors.find((color) => color.id === id).hexadecimal;
 };
 </script>
 
@@ -74,7 +76,7 @@ const submit = () => {
                         accept="image/*"
                         id="imageUploaded"
                         class="h-9 rounded-lg border-gray-300 bg-gray-200 text-sm text-black focus:border-gray-300 focus:ring-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:focus:border-zinc-700"
-                        @change="form.imageUploaded"
+                        @change="form.image"
                     />
                     <!-- <x-TextInput-error for="imageUploaded" /> -->
                 </div>
@@ -83,20 +85,16 @@ const submit = () => {
                     <div class="grid grid-cols-[16%_1fr] items-center justify-center gap-1">
                         <span
                             class="h-full w-full rounded-lg border border-gray-300 dark:border-zinc-700"
-                            :style="'background-color: #' + colorView2"
+                            :style="'background-color: #' + color"
                         ></span>
                         <Select
                             name="color"
                             id="color"
-                            v-model="form.colorValue"
+                            v-model="form.color"
+                            @change="handleColor(form.color)"
                             class="h-9 w-full rounded-lg border-gray-300 bg-gray-200 text-sm text-black focus:border-gray-300 focus:ring-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:focus:border-zinc-700"
                         >
-                            <option disabled selected value="">Seleccione</option>
-                            <!-- @foreach ($colors as $colorFor) @if ($colorValue == $colorFor->id)
-                            <option selected value="{{ $colorFor->id }}">{{ $colorFor->name }}</option>
-                            @else
-                            <option value="{{ $colorFor->id }}">{{ $colorFor->name }}</option>
-                            @endif @endforeach -->
+                            <option v-for="color in colors" :key="color.id" :value="color.id">{{ color.name }}</option>
                         </Select>
                     </div>
                     <!-- <x-TextInput-error for="color" /> -->
@@ -109,12 +107,7 @@ const submit = () => {
                         v-model="form.sticky"
                         class="h-9 rounded-lg border-gray-300 bg-gray-200 text-sm text-black focus:border-gray-300 focus:ring-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:focus:border-zinc-700"
                     >
-                        <option disabled selected value="">Seleccione</option>
-                        <!-- @foreach ($stickies as $stickyFor) @if ($sticky == $stickyFor->id)
-                        <option selected value="{{ $stickyFor->id }}">{{ $stickyFor->name }}</option>
-                        @else
-                        <option value="{{ $stickyFor->id }}">{{ $stickyFor->name }}</option>
-                        @endif @endforeach -->
+                        <option v-for="sticky in stickies" :key="sticky.id" :value="sticky.id">{{ sticky.name }}</option>
                     </Select>
                     <!-- <x-TextInput-error for="sticky" /> -->
                 </div>
@@ -126,12 +119,7 @@ const submit = () => {
                         v-model="form.size"
                         class="h-9 rounded-lg border-gray-300 bg-gray-200 text-sm text-black focus:border-gray-300 focus:ring-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:focus:border-zinc-700"
                     >
-                        <option disabled selected value="">Seleccione</option>
-                        <!-- @foreach ($sizes as $sizeFor) @if ($size == $sizeFor->id)
-                        <option selected value="{{ $sizeFor->id }}">{{ $sizeFor->name }}</option>
-                        @else
-                        <option value="{{ $sizeFor->id }}">{{ $sizeFor->name }}</option>
-                        @endif @endforeach -->
+                        <option v-for="size in sizes" :key="size.id" :value="size.id">{{ size.name }}</option>
                     </Select>
                     <!-- <x-TextInput-error for="size" /> -->
                 </div>

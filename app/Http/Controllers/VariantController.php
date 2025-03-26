@@ -9,8 +9,11 @@ use App\Models\Sticky;
 use App\Models\Variant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Intervention\Image\Laravel\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
+use Intervention\Image\Encoders\WebpEncoder;
 
 class VariantController extends Controller
 {
@@ -60,7 +63,7 @@ class VariantController extends Controller
                 'sticky' => ['required', 'exists:stickies,id'],
                 'color' => ['required', 'exists:colors,id'],
                 'size' => ['required', 'exists:sizes,id'],
-                'image' => ['required'],
+                'image' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
                 'price' => ['required', 'numeric', 'min:0'],
                 'stock' => ['required', 'numeric', 'min:0', 'integer'],
                 'promotion' => ['required', 'boolean'],
@@ -74,15 +77,37 @@ class VariantController extends Controller
                 'color_sticky_id' => $color_sticky_id,
                 'size_id' => $request['size']
             ]);
-            Variant::create([
+            $variant = Variant::create([
                 'product_id' => $product->id,
                 'characteristic_id' => $characteristic_id,
-                'image' => $request['image'],
+                'image' => 'sin_cargar',
                 'price' => $request['price'],
                 'stock' => $request['stock'],
                 'promotion' => $request['promotion'],
                 'discount' => $request['discount'],
             ]);
+            $image = $request->file('image');
+            $name = $variant->id . '.webp';
+            $directory = 'public/images/products/product-' . $product->id . '/variants';
+
+            if (!Storage::exists($directory)) {
+                Storage::makeDirectory($directory);
+            }
+
+            // Redimencionar y optimizar la imagen
+            $optimizedImage = Image::read($image)
+                ->resize(800, 800, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                })
+                ->encode(new WebpEncoder(quality: 90));
+
+            // Guardar la imagen en el almacenamiento
+            Storage::disk('public')->put($directory . '/' . $name, (string) $optimizedImage);
+
+            $variant->image = Storage::url($directory . '/' . $name);
+            $variant->save();
+
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();

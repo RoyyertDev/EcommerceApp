@@ -40,6 +40,7 @@ const submit = () => {
         return alert('Todos los campos son requeridos');
     }
     form.post(route('admin.variants.store', props.product.id), {
+        forceFormData: true,
         onFinish: () => {
             toggleOpen();
             return redirect(route('admin.variants.create', props.product.id));
@@ -105,6 +106,7 @@ const handleColor = (id) => {
                     <TextInput
                         @change="form.image = $event.target.files[0]"
                         type="file"
+                        accept="image/*"
                         name="imagen"
                         id="imagen"
                         class="h-9 rounded-lg border-gray-300 bg-gray-200 text-sm text-black focus:border-gray-300 focus:ring-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:focus:border-zinc-700"

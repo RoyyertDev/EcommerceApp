@@ -63,8 +63,8 @@ const props = defineProps({
                             />
                         </td>
                         <td class="p-1">
-                            <!-- :src="Storage::url(variant.image)" -->
                             <img
+                                :src="variant.image"
                                 :alt="variant.fk_characteristic"
                                 class="h-8 w-8 rounded-md object-cover transition duration-300 hover:scale-[300%]"
                             />
@@ -86,7 +86,7 @@ const props = defineProps({
                         </td>
                         <td class="">{{ variant.discount }}%</td>
                         <td class="">{{ variant.created_at }}</td>
-                        <UpdateView :variant="variant" />
+                        <UpdateView :variant="variant" :colors="colors" :stickies="stickies" :sizes="sizes" :key="'update-' + variant.id" />
                         <!-- <td class="">@livewire('admin.variants.update', ['id' => variant->id], key('update-' . variant->id))</td> -->
                     </tr>
                 </template>
