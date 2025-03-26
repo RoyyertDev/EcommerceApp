@@ -45,6 +45,7 @@ const logout = () => {
                         <NavLink :href="route('admin.users.create')" :active="route().current('admin.users.create')"> Usuarios </NavLink>
                         <NavLink :href="route('admin.products.create')" :active="route().current('admin.products.create')"> Productos </NavLink>
                         <NavLink :href="route('admin.landing')" :active="route().current('admin.landing')"> Landing </NavLink>
+                        <NavLink :href="route('admin.vitals.create')" :active="route().current('admin.vitals.create')"> Vitales </NavLink>
                         <ToggleTheme />
                     </div>
                 </div>
