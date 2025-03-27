@@ -94,10 +94,12 @@ const filter = ref('');
 								</th>
 							</tr>
 						</thead>
-						<tbody v-for="user in users">
+						<tbody>
 							<tr
+								v-for="user in users"
 								class="my-1 h-12 border-b border-gray-200 dark:border-zinc-800 hover:bg-gray-200 dark:hover:bg-zinc-800 transition-colors duration-200"
-								wire:key="user-{{ $user->id }}">
+								:key="'user-' + user.id"
+							>
 								<td class="w-12 text-center">
 									<input
 										class="text-[#DE5976] focus:ring-0 w-5 h-5 rounded-md bg-gray-200 dark:bg-zinc-800 border-gray-300 dark:border-zinc-700 cursor-pointer hover:bg-gray-300 dark:hover:bg-zinc-700 hover:border-gray-200 dark:hover:border-zinc-600"
