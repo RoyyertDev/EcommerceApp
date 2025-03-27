@@ -1,17 +1,22 @@
 <script setup>
-    import DivTable from '@/components/myComponents/DivTable.vue';
+    import DivVitals from '@/components/myComponents/admin/vitals/DivVitals.vue';
+    import ButtonRegisterAdmin from '@/components/myComponents/ButtonRegisterAdmin.vue';
 
     defineProps({
       stickies: Object,
     })
 </script>
 <template>
-    <DivTable>
+    <DivVitals>
+        <template #head>
+            <form class="flex gap-4">
+                <input v-model="search" class=" py-5 bg-gray-200 dark:bg-zinc-800 rounded-lg border-gray-300 dark:border-zinc-700 h-9 text-black dark:text-white text-sm focus:border-gray-300 dark:focus:border-zinc-700 focus:ring-transparent" type="search" placeholder="Buscar...">
+                <ButtonRegisterAdmin>Registrar</ButtonRegisterAdmin>
+            </form>
+        </template>
         <template #thHead>
             <th class="">Nombre</th>
-            <th class="">Acciones</th>
         </template>
-
         <template #tBody>
             <tr v-for="sticky in stickies"
                 class="my-1 h-12 border-b border-gray-300 transition-colors duration-200 hover:bg-gray-200 dark:border-zinc-800 dark:hover:bg-zinc-800"
@@ -31,5 +36,5 @@
         <template #footer>
             <!-- <Pagination :links="products.links" /> -->
         </template>
-    </DivTable>
+    </DivVitals>
 </template>
