@@ -11,7 +11,7 @@ const search = ref('');
 </script>
 
 <template>
-    <div class="mx-auto max-w-7xl px-8">
+    <div class="mx-auto w-[80rem] max-w-full px-8">
         <aside class="grid grid-cols-[auto_auto_auto_1fr] items-center justify-center w-full py-1 text-black dark:text-white gap-4">
             <div v-if="buttonsFilter" class="bg-gray-100 dark:bg-zinc-900 border-gray-200 dark:border-zinc-800 rounded-lg text-black dark:text-white text-sm flex items-center justify-center w-full mx-auto p-2 gap-2">
                 <slot name="buttonsFilter" />

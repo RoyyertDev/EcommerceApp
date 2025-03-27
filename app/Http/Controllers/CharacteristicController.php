@@ -67,9 +67,21 @@ class CharacteristicController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Characteristic $characteristic)
+    public static function update(Array $request, $characteristic_id)
     {
-        //
+        DB::beginTransaction();
+        try {
+            Validator::make($request, [
+                'size_id' => ['required', 'exists:sizes,id'],
+            ])->validate();
+            Characteristic::findOrFail($characteristic_id)->update([
+                'size_id' => $request['size_id'],
+            ]);
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            dd($e);
+        }
     }
 
     /**

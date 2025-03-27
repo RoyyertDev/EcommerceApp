@@ -67,9 +67,23 @@ class ColorStickyController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ColorSticky $colorSticky)
+    public static function update(Array $request, $colorSticky_id)
     {
-        //
+        DB::beginTransaction();
+        try {
+            Validator::make($request, [
+                'sticky_id' => ['required', 'exists:stickies,id'],
+                'color_id' => ['required', 'exists:colors,id'],
+            ])->validate();
+            ColorSticky::findOrFail($colorSticky_id)->update([
+                'sticky_id' => $request['sticky_id'],
+                'color_id' => $request['color_id'],
+            ]);
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            dd($e);
+        }
     }
 
     /**

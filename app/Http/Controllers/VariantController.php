@@ -86,26 +86,24 @@ class VariantController extends Controller
                 'promotion' => $request['promotion'],
                 'discount' => $request['discount'],
             ]);
-            $image = $request->file('image');
-            $name = $variant->id . '.webp';
-            $directory = 'public/images/products/product-' . $product->id . '/variants';
+            $directory = 'images/products/product-' . $product->id . '/variants';
 
             if (!Storage::exists($directory)) {
                 Storage::makeDirectory($directory);
             }
 
             // Redimencionar y optimizar la imagen
-            $optimizedImage = Image::read($image)
-                ->resize(800, 800, function ($constraint) {
+            $optimizedImage = Image::read($request->file('image'))
+                ->resize(1024, 1024, function ($constraint) {
                     $constraint->aspectRatio();
                     $constraint->upsize();
                 })
                 ->encode(new WebpEncoder(quality: 90));
 
             // Guardar la imagen en el almacenamiento
-            Storage::disk('public')->put($directory . '/' . $name, (string) $optimizedImage);
+            Storage::disk('public')->put($directory . '/' . $variant->id . '.webp', (string) $optimizedImage);
 
-            $variant->image = Storage::url($directory . '/' . $name);
+            $variant->image = Storage::url($directory . '/' . $variant->id . '.webp');
             $variant->save();
 
             DB::commit();
@@ -136,7 +134,57 @@ class VariantController extends Controller
      */
     public function update(Request $request, Variant $variant)
     {
-        //
+        DB::beginTransaction();
+        try {
+            Validator::make($request->all(), [
+                'sticky' => ['required', 'exists:stickies,id'],
+                'color' => ['required', 'exists:colors,id'],
+                'size' => ['required', 'exists:sizes,id'],
+                // 'image' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+                'price' => ['required', 'numeric', 'min:0'],
+                'stock' => ['required', 'numeric', 'min:0', 'integer'],
+                'discount' => ['required', 'numeric'],
+            ])->validate();
+            ColorStickyController::update([
+                'sticky_id' => $request['sticky'],
+                'color_id' => $request['color'],
+            ], $variant->characteristic->color_sticky_id);
+            CharacteristicController::update([
+                'size_id' => $request['size']
+            ], $variant->characteristic_id);
+            $variant->update([
+                'price' => $request['price'],
+                'stock' => $request['stock'],
+                'discount' => $request['discount'],
+            ]);
+            $directory = 'images/products/product-' . $variant->product_id . '/variants';
+
+            if ($variant->image && Storage::exists(public_path($variant->image))) {
+                Storage::delete(public_path($variant->image));
+            }
+            if (!Storage::exists($directory)) {
+                Storage::makeDirectory($directory);
+            }
+
+            // Redimencionar y optimizar la imagen
+            $optimizedImage = Image::read($request->file('image'))
+                ->resize(1024, 1024, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                })
+                ->encode(new WebpEncoder(quality: 90));
+
+            // // Guardar la imagen en el almacenamiento
+            Storage::disk('public')->put($directory . '/' . $variant->id . '.webp', (string) $optimizedImage);
+
+            $variant->image = Storage::url($directory . '/' . $variant->id . '.webp');
+            $variant->save();
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return dd($e);
+        }
     }
 
     /**

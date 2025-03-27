@@ -86,7 +86,14 @@ const props = defineProps({
                         </td>
                         <td class="">{{ variant.discount }}%</td>
                         <td class="">{{ variant.created_at }}</td>
-                        <UpdateView :variant="variant" :colors="colors" :stickies="stickies" :sizes="sizes" :key="'update-' + variant.id" />
+                        <UpdateView
+                            :product="product.id"
+                            :variant="variant"
+                            :colors="colors"
+                            :stickies="stickies"
+                            :sizes="sizes"
+                            :key="'update-' + variant.id"
+                        />
                         <!-- <td class="">@livewire('admin.variants.update', ['id' => variant->id], key('update-' . variant->id))</td> -->
                     </tr>
                 </template>
