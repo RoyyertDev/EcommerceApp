@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class vitalsController extends Controller
@@ -29,5 +28,4 @@ class vitalsController extends Controller
     {
         return Inertia::render('admin/vitals/Show', ['vitals' => $this->index()]);
     }
-
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LandingController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\VariantController;
@@ -23,6 +24,4 @@ Route::get('/products/variant/{product}', [VariantController::class, 'create'])-
 Route::post('/products/variant/{product}', [VariantController::class, 'store'])->name('variants.store');
 Route::put('/products/variant/{variant}', [VariantController::class, 'update'])->name('variants.update');
 
-Route::get('/landing', function (){
-    return Inertia::render('admin/Landing');
-})->name('landing');
+Route::get('/landing', [LandingController::class, 'create'])->name('landing');
