@@ -7,6 +7,7 @@ use App\Models\RoleUser;
 use App\Models\User;
 use App\Models\UserDetail;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,6 +20,7 @@ use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 
 class RegisteredUserController extends Controller
 {
@@ -54,8 +56,16 @@ class RegisteredUserController extends Controller
                 // 'zip_code' => ['required', 'string', 'max:20'],
                 // 'site_reference' => ['required', 'string', 'max:250'],
                 // 'phoneCode' => ['required', 'string', 'max:5'],
-                // 'phone' => ['required', 'string', 'max:15'],
+                'phone' => ['required', 'string', 'max:15'],
                 'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
+            ], [
+                'required' => 'El campo :attribute es obligatorio.',
+                'max.string' => 'El campo :attribute no debe tener más de :max caracteres.',
+                'email' => 'El campo :attribute debe ser un correo electrónico válido.',
+                'unique' => 'El :attribute ya ha sido registrado.',
+                'confirmed' => 'La confirmación de :attribute no coincide.',
+                'boolean' => 'El campo :attribute debe ser verdadero o falso.',
+                'accepted' => 'Debes aceptar los términos y condiciones.',
             ])->validate();
 
             $user = User::create([
@@ -88,9 +98,9 @@ class RegisteredUserController extends Controller
             event(new Registered($user));
             Auth::login($user);
             return to_route('dashboard');
-        } catch (\Exception $e) {
+        } catch (ValidationException $e) {
             DB::rollBack();
-            return back()->with('error', $e->getMessage());
+            return redirect()->back()->withErrors($e->validator->errors())->withInput();
         }
     }
 }
