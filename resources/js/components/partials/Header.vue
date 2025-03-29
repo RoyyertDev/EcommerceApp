@@ -24,11 +24,11 @@ onMounted(() => {
 </script>
 <template>
     <header
-        class="sticky top-0 z-10 mb-4 h-14 w-full rounded-b-3xl bg-white px-7 shadow-[#DE5976] transition-all duration-500 dark:bg-black md:px-14 lg:px-28"
+        class="sticky top-0 z-10 mb-4 h-14 w-full rounded-b-3xl bg-white px-7 shadow-[#DE5976] transition-transform duration-500 dark:bg-black md:px-14 lg:px-28"
         :class="{ 'shadow-[0_4px_5px_-4px]': scrolled || navOpen }"
     >
         <nav
-            class="grid-cols-1 grid-rows-[1fr_auto_1fr] overflow-hidden py-4 transition-all duration-500 sm:grid sm:grid-cols-[1fr_60%_1fr] sm:grid-rows-1 md:grid-cols-[1fr_70%_1fr]"
+            class="grid-cols-1 grid-rows-[1fr_auto_1fr] overflow-hidden py-4 transition-transform duration-500 sm:grid sm:grid-cols-[1fr_60%_1fr] sm:grid-rows-1 md:grid-cols-[1fr_70%_1fr]"
             :class="{ 'max-h-14': !navOpen, 'max-h-screen': navOpen }"
         >
             <div class="mb-4 flex w-full justify-between sm:mb-0">
@@ -47,9 +47,11 @@ onMounted(() => {
                 <ToggleTheme />
             </div>
             <div class="flex items-center justify-center gap-4" v-if="canLogin">
-                <LinksNav v-if="authUser" :href="route(authUser.detail && authUser.detail.role_id === roleAdmin ? 'admin.dashboard.create' : 'dashboard')">{{
-                    authUser.names
-                }}</LinksNav>
+                <LinksNav
+                    v-if="authUser"
+                    :href="route(authUser.detail && authUser.detail.role_id === roleAdmin ? 'admin.dashboard.create' : 'dashboard')"
+                    >{{ authUser.names }}</LinksNav
+                >
                 <LinksNav v-else route="/login" :href="route('login')">Acceder</LinksNav>
             </div>
         </nav>

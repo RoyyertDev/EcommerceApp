@@ -10,9 +10,7 @@ const props = defineProps({
     },
 });
 const active = props.route == usePage().url;
-const classes = active
-    ? 'border-b-2 border-[#DE5976]'
-    : 'border-b-2 border-transparent group-hover:border-transparent transition duration-500 ease-out';
+const classes = active ? 'border-b-2 border-[#DE5976]' : 'border-b-2 border-transparent group-hover:border-transparent';
 </script>
 <template>
     <Link v-if="active" :class="classes" :href="href">
@@ -23,7 +21,7 @@ const classes = active
             <slot />
         </Link>
         <div
-            class="-bottom-.5 absolute left-1/2 w-0 -translate-x-1/2 transform border-b-2 border-[#DE5976] transition-all duration-500 ease-out group-hover:w-full"
+            class="-bottom-.5 transition-color absolute left-1/2 w-0 -translate-x-1/2 transform border-b-2 border-[#DE5976] duration-500 ease-out group-hover:w-full"
         ></div>
     </div>
 </template>

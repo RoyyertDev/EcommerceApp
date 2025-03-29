@@ -52,18 +52,18 @@ const submit = () => {
                             @click="formCard = 0"
                             type="button"
                             class="rounded-full transition-all duration-300 ease-in-out"
-                            :class="{ 'h-2 w-2 bg-[#DE5976]': formCard === 0, 'h-1 w-1.5 bg-gray-100': formCard === 1 }"
+                            :class="{ 'h-2 w-2 bg-[#DE5976]': formCard === 0, 'h-1 w-1.5 bg-zinc-400 dark:bg-gray-100': formCard === 1 }"
                         ></button>
                         <button
                             @click="formCard = 1"
                             type="button"
                             class="rounded-full transition-all duration-300 ease-in-out"
-                            :class="{ 'h-1.5 w-1.5 bg-gray-100': formCard === 0, 'h-2 w-2 bg-[#DE5976]': formCard === 1 }"
+                            :class="{ 'h-1.5 w-1.5 bg-zinc-400 dark:bg-gray-100': formCard === 0, 'h-2 w-2 bg-[#DE5976]': formCard === 1 }"
                         ></button>
                     </div>
                 </div>
                 <div class="overflow-hidden">
-                    <div class="flex transition-all duration-500 ease-in-out" :style="{ transform: `translateX(-${formCard * 100}%)` }">
+                    <div class="flex transition-transform duration-500 ease-in-out" :style="{ transform: `translateX(-${formCard * 100}%)` }">
                         <fieldset class="grid w-full shrink-0 grid-cols-2 gap-x-4 gap-y-6">
                             <div>
                                 <InputLabel for="names" value="Nombres" />
@@ -74,7 +74,6 @@ const submit = () => {
                                     class="mt-1 block w-full"
                                     type="text"
                                     name="names"
-                                    required
                                     autocomplete="names"
                                 />
                             </div>
@@ -87,7 +86,6 @@ const submit = () => {
                                     class="mt-1 block w-full"
                                     type="text"
                                     name="surnames"
-                                    required
                                     autocomplete="surnames"
                                 />
                             </div>
@@ -100,7 +98,6 @@ const submit = () => {
                                     class="mt-1 block w-full"
                                     type="text"
                                     name="identification_document"
-                                    required
                                     autocomplete="identification_document"
                                 />
                             </div>
@@ -113,7 +110,6 @@ const submit = () => {
                                     class="mt-1 block w-full"
                                     type="email"
                                     name="email"
-                                    required
                                     autocomplete="email"
                                 />
                             </div>
@@ -126,7 +122,6 @@ const submit = () => {
                                     class="mt-1 block w-full"
                                     type="password"
                                     name="password"
-                                    required
                                     autocomplete="new-password"
                                 />
                             </div>
@@ -139,7 +134,6 @@ const submit = () => {
                                     class="mt-1 block w-full"
                                     type="password"
                                     name="password_confirmation"
-                                    required
                                     autocomplete="new-password"
                                 />
                             </div>
@@ -174,7 +168,6 @@ const submit = () => {
                                     class="mt-1 block w-full"
                                     type="text"
                                     name="zip_code"
-                                    required
                                     autocomplete="zip_code"
                                 />
                             </div>
@@ -187,7 +180,6 @@ const submit = () => {
                                     class="mt-1 block w-full"
                                     type="text"
                                     name="site_reference"
-                                    required
                                     autocomplete="name"
                                 />
                             </div>
@@ -202,7 +194,6 @@ const submit = () => {
                                         class="mt-1 block w-full"
                                         type="text"
                                         name="phoneCode"
-                                        required
                                         autocomplete="phoneCode"
                                     />
                                     <TextInput
@@ -212,7 +203,6 @@ const submit = () => {
                                         class="mt-1 block w-full"
                                         type="number"
                                         name="phone"
-                                        required
                                         autocomplete="phone"
                                     />
                                 </div>
@@ -226,7 +216,7 @@ const submit = () => {
                 <div v-if=""class="mt-4">
                         <InputLabel for="terms">
                             <div class="flex items-center">
-                                <Checkbox name="terms" id="terms" required />
+                                <Checkbox name="terms" id="terms"   />
                                 <div class="ms-2">
                                     {!! __('I agree to the :terms_of_service and :privacy_policy', [
                                             'terms_of_service' => '<a target="_blank" href="'.route('terms.show').'" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">'.__('Terms of Service').'</a>',

@@ -72,11 +72,11 @@ const submit = () => {
                 <div class="mt-4 flex items-center justify-between">
                     <label for="remember_me" class="flex cursor-pointer items-center">
                         <Checkbox v-model:checked="form.remember" id="remember_me" name="remember" />
-                        <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">Recordarme</span>
+                        <span class="ms-2 text-sm text-gray-600 hover:text-[#DE5976] dark:text-gray-400 dark:hover:text-[#DE5976]">Recordarme</span>
                     </label>
                     <Link
                         v-if="canResetPassword"
-                        class="text-sm text-gray-600 hover:text-[#DE5976] hover:underline dark:text-gray-400"
+                        class="text-sm text-gray-600 hover:text-[#DE5976] hover:underline dark:text-gray-400 dark:hover:text-[#DE5976]"
                         :href="route('password.request')"
                     >
                         Recuperar contraseña

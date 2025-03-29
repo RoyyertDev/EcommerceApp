@@ -17,26 +17,21 @@ import { Link } from '@inertiajs/vue3';
             <article>
                 <h1 class="pb-1 font-semibold">Información</h1>
                 <div class="grid grid-cols-2 gap-x-8 gap-y-1 text-gray-600 dark:text-gray-400">
-                    <Link class="w-auto transition-all duration-300 hover:text-[#DE5976]" href="/">Inicio</Link>
-                    <Link class="w-auto transition-all duration-300 hover:text-[#DE5976]" href="/about">Nosotros</Link>
-                    <Link class="w-auto transition-all duration-300 hover:text-[#DE5976]" href="/">Productos</Link>
-                    <Link class="w-auto transition-all duration-300 hover:text-[#DE5976]" href="/">Carrito</Link>
-                    <Link class="w-auto transition-all duration-300 hover:text-[#DE5976]" href="/">Acceder</Link>
-                    <Link class="w-auto transition-all duration-300 hover:text-[#DE5976]" href="/">Registrate</Link>
+                    <Link class="w-auto hover:text-[#DE5976]" href="/">Inicio</Link>
+                    <Link class="w-auto hover:text-[#DE5976]" href="/about">Nosotros</Link>
+                    <Link class="w-auto hover:text-[#DE5976]" href="/">Productos</Link>
+                    <Link class="w-auto hover:text-[#DE5976]" href="/">Carrito</Link>
+                    <Link class="w-auto hover:text-[#DE5976]" href="/">Acceder</Link>
+                    <Link class="w-auto hover:text-[#DE5976]" href="/">Registrate</Link>
+                    <Link target="_blank" class="w-auto hover:text-[#DE5976]" href="https://www.instagram.com/jirehhimport">Instagram</Link>
                     <Link
                         target="_blank"
-                        class="w-auto transition-all duration-300 hover:text-[#DE5976]"
-                        href="https://www.instagram.com/jirehhimport"
-                        >Instagram</Link
-                    >
-                    <Link
-                        target="_blank"
-                        class="w-auto transition-all duration-300 hover:text-[#DE5976]"
+                        class="w-auto hover:text-[#DE5976]"
                         href="https://www.facebook.com/profile.php?id=61553835838866&mibextid=ZbWKwL"
                         >Facebook</Link
                     >
-                    <Link target="_blank" class="w-auto transition-all duration-300 hover:text-[#DE5976]" href="/">WhatsApp</Link>
-                    <Link target="_blank" class="w-auto transition-all duration-300 hover:text-[#DE5976]" href="/">Tiktok</Link>
+                    <Link target="_blank" class="w-auto hover:text-[#DE5976]" href="/">WhatsApp</Link>
+                    <Link target="_blank" class="w-auto hover:text-[#DE5976]" href="/">Tiktok</Link>
                 </div>
             </article>
             <article>
@@ -65,7 +60,7 @@ import { Link } from '@inertiajs/vue3';
                             placeholder="Mensaje"
                         ></textarea>
                         <button
-                            class="col-start-2 w-auto rounded-lg border border-transparent bg-gray-50 px-1 py-1.5 text-gray-600 transition-all duration-300 hover:border-[#DE5976] hover:text-[#DE5976] dark:bg-[#0e0e0e] dark:text-gray-400"
+                            class="col-start-2 w-auto rounded-lg border border-transparent bg-gray-50 px-1 py-1.5 text-gray-600 hover:border-[#DE5976] hover:text-[#DE5976] dark:bg-[#0e0e0e] dark:text-gray-400"
                         >
                             Enviar
                         </button>

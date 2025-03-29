@@ -20,7 +20,7 @@ const price = props.price ?? null;
 </script>
 <template>
     <article
-        class="grid grid-rows-[auto_1fr] gap-4 rounded-lg bg-gray-50 p-4 shadow-[0_1px_8px_-5px_#DE5976] transition-all duration-300 hover:scale-105 hover:shadow-[0_3px_8px_-5px_#DE5976] dark:bg-[#0e0e0e]"
+        class="grid grid-rows-[auto_1fr] gap-4 rounded-lg bg-gray-50 p-4 shadow-[0_1px_8px_-5px_#DE5976] transition-transform duration-300 hover:scale-105 hover:shadow-[0_3px_8px_-5px_#DE5976] dark:bg-[#0e0e0e]"
     >
         <figure class="h-full w-full overflow-hidden rounded-lg">
             <img :src="image" :alt="title" />
@@ -31,7 +31,7 @@ const price = props.price ?? null;
         </div>
         <h1 v-else class="text-center text-xl font-semibold">{{ title }}</h1>
         <p class="text-gray-600 dark:text-gray-400">{{ description }}</p>
-        <button class="m-auto w-auto rounded-lg border px-4 py-1 transition-all duration-300 hover:border-[#DE5976] hover:text-[#DE5976]">
+        <button class="m-auto w-auto rounded-lg border px-4 py-1 hover:border-[#DE5976] hover:text-[#DE5976]">
             {{ button }}
         </button>
     </article>
