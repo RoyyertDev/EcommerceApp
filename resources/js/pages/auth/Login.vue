@@ -33,60 +33,65 @@ const submit = () => {
 <template>
     <Head title="Login" />
     <LandingLayout :canLogin="canLogin">
-        <AuthenticationCard :width="'max-w-md w-full'">
-            <template #logo>
-                <AuthenticationCardLogo />
-            </template>
-            <div v-if="status" class="mb-4 text-sm font-medium text-green-600">
-                {{ status }}
-            </div>
-            <form class="space-y-6 p-6" @submit.prevent="submit">
-                <h1 class="text-xl font-bold leading-tight tracking-tight">Inicia sesión en tu cuenta</h1>
-                <div>
-                    <InputLabel for="email" value="Correo electronico" />
-                    <TextInput
-                        v-model="form.email"
-                        id="email"
-                        placeholder="jirehimport@gmail.com"
-                        class="mt-1 block w-full"
-                        type="email"
-                        name="email"
-                        required
-                        autofocus
-                        autocomplete="username"
-                    />
+        <div class="grid grid-cols-2">
+            <AuthenticationCard :width="'max-w-md w-full'">
+                <template #logo>
+                    <AuthenticationCardLogo />
+                </template>
+                <div v-if="status" class="mb-4 text-sm font-medium text-green-600">
+                    {{ status }}
                 </div>
-                <div class="mt-4">
-                    <InputLabel for="password" value="Contraseña" />
-                    <TextInput
-                        v-model="form.password"
-                        id="password"
-                        placeholder="••••••••"
-                        class="mt-1 block w-full"
-                        type="password"
-                        name="password"
-                        required
-                        autocomplete="current-password"
-                    />
-                </div>
-                <div class="mt-4 flex items-center justify-between">
-                    <label for="remember_me" class="flex cursor-pointer items-center">
-                        <Checkbox v-model:checked="form.remember" id="remember_me" name="remember" />
-                        <span class="ms-2 text-sm text-gray-600 hover:text-[#DE5976] dark:text-gray-400 dark:hover:text-[#DE5976]">Recordarme</span>
-                    </label>
-                    <Link
-                        v-if="canResetPassword"
-                        class="text-sm text-gray-600 hover:text-[#DE5976] hover:underline dark:text-gray-400 dark:hover:text-[#DE5976]"
-                        :href="route('password.request')"
-                    >
-                        Recuperar contraseña
-                    </Link>
-                </div>
-                <PrimaryButton> Iniciar sesión </PrimaryButton>
-                <p class="text-sm font-light text-gray-400">
-                    ¿No se ha registrado? <Link :href="route('register')" class="font-semibold text-[#DE5976] hover:underline">Registrarse</Link>
-                </p>
-            </form>
-        </AuthenticationCard>
+                <form class="space-y-6 p-6" @submit.prevent="submit">
+                    <h1 class="text-xl font-bold leading-tight tracking-tight">Inicia sesión en tu cuenta</h1>
+                    <div>
+                        <InputLabel for="email" value="Correo electronico" />
+                        <TextInput
+                            v-model="form.email"
+                            id="email"
+                            placeholder="jirehimport@gmail.com"
+                            class="mt-1 block w-full"
+                            type="email"
+                            name="email"
+                            required
+                            autofocus
+                            autocomplete="username"
+                        />
+                    </div>
+                    <div class="mt-4">
+                        <InputLabel for="password" value="Contraseña" />
+                        <TextInput
+                            v-model="form.password"
+                            id="password"
+                            placeholder="••••••••"
+                            class="mt-1 block w-full"
+                            type="password"
+                            name="password"
+                            required
+                            autocomplete="current-password"
+                        />
+                    </div>
+                    <div class="mt-4 flex items-center justify-between">
+                        <label for="remember_me" class="flex cursor-pointer items-center">
+                            <Checkbox v-model:checked="form.remember" id="remember_me" name="remember" />
+                            <span class="ms-2 text-sm text-gray-600 hover:text-[#DE5976] dark:text-gray-400 dark:hover:text-[#DE5976]"
+                                >Recordarme</span
+                            >
+                        </label>
+                        <Link
+                            v-if="canResetPassword"
+                            class="text-sm text-gray-600 hover:text-[#DE5976] hover:underline dark:text-gray-400 dark:hover:text-[#DE5976]"
+                            :href="route('password.request')"
+                        >
+                            Recuperar contraseña
+                        </Link>
+                    </div>
+                    <PrimaryButton> Iniciar sesión </PrimaryButton>
+                    <p class="text-sm font-light text-gray-400">
+                        ¿No se ha registrado? <Link :href="route('register')" class="font-semibold text-[#DE5976] hover:underline">Registrarse</Link>
+                    </p>
+                </form>
+            </AuthenticationCard>
+            <img src="/img/new/xd.svg" class="m-auto" alt="JirehImport logo" />
+        </div>
     </LandingLayout>
 </template>
