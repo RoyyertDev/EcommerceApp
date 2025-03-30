@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Color;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class ColorController extends Controller
 {
@@ -28,7 +31,25 @@ class ColorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        DB::beginTransaction();
+        try {
+            Validator::make($request->all(), [
+                'name' => ['required', 'string', 'max:20', 'unique:colors'],
+                'hexadecimal' => ['required', 'string', 'max:6', 'unique:colors'],
+            ],[
+                'required' => 'El :attribute es obligatorio.',
+                'max' => 'El :attribute debe tener menos de :max caracteres.',
+                'unique' => 'El :attribute ya existe.',
+            ])->validate();
+            Color::create([
+                'name' => $request->name,
+                'hexadecimal' => $request->hexadecimal,
+            ]);
+            DB::commit();
+        } catch (ValidationException $e) {
+            DB::rollBack();
+            return redirect()->back()->withErrors(['colors' => [$e->validator->errors()]])->withInput();
+        }
     }
 
     /**

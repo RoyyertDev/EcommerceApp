@@ -33,7 +33,7 @@ const search = ref('');
             </div>
         </aside>
         <section class="w-full rounded-xl bg-gray-100 dark:bg-zinc-900 shadow-md">
-            <aside class="flex items-center justify-end w-full py-3 px-6">
+            <header class="flex items-center justify-end w-full py-3 px-6">
                 <input readonly class="h-9 bg-gray-200 dark:bg-zinc-800 border-gray-300 dark:border-zinc-700 rounded-l-lg text-black dark:text-white w-40 text-sm focus:border-gray-300 dark:focus:border-zinc-700 focus:ring-transparent" value="Número de registros:"></input>
                 <select v-model="number" class="bg-gray-200 dark:bg-zinc-800 rounded-r-lg border-gray-300 dark:border-zinc-700 h-9 text-black dark:text-white cursor-pointer w-20 text-sm focus:border-gray-300 dark:focus:border-zinc-700 focus:ring-transparent mr-4">
                     <option value="5">5</option>
@@ -55,7 +55,7 @@ const search = ref('');
                     <slot name="optionsFilter" />
                 </select>
                 <input v-model="search" class="bg-gray-200 dark:bg-zinc-800 rounded-r-lg border-gray-300 dark:border-zinc-700 h-9 text-black dark:text-white text-sm focus:border-gray-300 dark:focus:border-zinc-700 focus:ring-transparent" type="search" placeholder="Buscar...">
-            </aside>
+            </header>
             <table class="table-auto text-black dark:text-white w-full text-sm text-left">
                 <thead>
                     <tr class="bg-gray-200 dark:bg-zinc-800 my-1 h-9">

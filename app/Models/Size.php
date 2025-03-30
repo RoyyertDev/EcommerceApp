@@ -7,6 +7,8 @@ use Illuminate\Support\Str;
 
 class Size extends Model
 {
+    protected $fillable = ['name'];
+
     public $incrementing = false; // Desactiva autoincremento
     protected $keyType = 'string'; // Define la clave primaria como string
 
@@ -21,5 +23,10 @@ class Size extends Model
     public function characteristics()
     {
         return $this->hasMany(Characteristics::class);
+    }
+
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = Str::upper($value);
     }
 }

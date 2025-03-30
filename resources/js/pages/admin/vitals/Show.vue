@@ -8,17 +8,18 @@ import Stickies from './Stickies.vue';
 
 defineProps({
     vitals: Object,
+    errors: Object,
 });
 </script>
 <template>
     <AdminLayout title="Vitales">
         <template #header>Gestión de Productos</template>
         <main class="grid grid-cols-2">
-            <MaterialProducts :materialProducts="vitals.materialProducts" />
-            <CategoryProducts :categoryProducts="vitals.categoryProducts" />
-            <Colors :colors="vitals.colors" />
-            <Sizes :sizes="vitals.sizes" />
-            <Stickies :stickies="vitals.stickies" />
+            <MaterialProducts :errors="errors.materialProducts" :materialProducts="vitals.materialProducts" />
+            <CategoryProducts :errors="errors.categoryProducts" :categoryProducts="vitals.categoryProducts" />
+            <Colors :errors="errors.colors" :colors="vitals.colors" />
+            <Sizes :errors="errors.sizes" :sizes="vitals.sizes" />
+            <Stickies :errors="errors.stickies" :stickies="vitals.stickies" />
         </main>
     </AdminLayout>
 </template>

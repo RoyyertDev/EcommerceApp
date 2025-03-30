@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Sticky;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class StickyController extends Controller
 {
@@ -28,7 +31,21 @@ class StickyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        DB::beginTransaction();
+        try {
+            Validator::make($request->all(), [
+                'name' => ['required', 'string', 'max:20', 'unique:stickies'],
+            ],[
+                'required' => 'El nombre es obligatorio.',
+                'max' => 'El nombre debe tener menos de :max caracteres.',
+                'unique' => 'El nombre ya existe.',
+            ])->validate();
+            Sticky::create($request->only('name'));
+            DB::commit();
+        } catch (ValidationException $e) {
+            DB::rollBack();
+            return redirect()->back()->withErrors(['stickies' => [$e->validator->errors()]])->withInput();
+        }
     }
 
     /**

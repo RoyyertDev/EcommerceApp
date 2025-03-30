@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Size;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class SizeController extends Controller
 {
@@ -28,7 +31,21 @@ class SizeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        DB::beginTransaction();
+        try {
+            Validator::make($request->all(), [
+                'name' => ['required', 'string', 'max:5', 'unique:sizes'],
+            ],[
+                'required' => 'El nombre es obligatorio.',
+                'max' => 'El nombre debe tener menos de :max caracteres.',
+                'unique' => 'El nombre ya existe.',
+            ])->validate();
+            Size::create($request->only('name'));
+            DB::commit();
+        } catch (ValidationException $e) {
+            DB::rollBack();
+            return redirect()->back()->withErrors(['sizes' => [$e->validator->errors()]])->withInput();
+        }
     }
 
     /**

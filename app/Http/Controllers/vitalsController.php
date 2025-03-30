@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Inertia\Inertia;
 
-class vitalsController extends Controller
+class VitalsController extends Controller
 {
     /**
      * Display a listing of the resource.

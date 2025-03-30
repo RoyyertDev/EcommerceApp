@@ -1,29 +1,51 @@
 <script setup>
-import ButtonRegisterAdmin from '@/components/myComponents/ButtonRegisterAdmin.vue';
+import InputError from '@/components/InputError.vue';
 import DivVitals from '@/components/myComponents/admin/vitals/DivVitals.vue';
+import ButtonRegisterAdmin from '@/components/myComponents/ButtonRegisterAdmin.vue';
+import { useForm } from '@inertiajs/vue3';
 
-defineProps({
+const props = defineProps({
     colors: Object,
+    errors: Object,
 });
+
+const form = useForm({
+    name: '',
+    hexadecimal: '',
+});
+
+const submit = () => {
+    form.post(route('admin.colors.store'), {
+        onFinish: () => {
+            form.reset();
+            return redirect(route('admin.vitals.create'));
+        },
+    });
+};
 </script>
 <template>
-    <DivVitals>
+    <DivVitals title="Colores">
         <template #head>
-            <h1>Colores</h1>
             <form class="flex gap-4">
-                <input
-                    v-model="search"
-                    class="h-9 rounded-lg  border-gray-300 bg-gray-200 py-3 text-sm text-black focus:border-gray-300 focus:ring-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:focus:border-zinc-700"
-                    type="search"
-                    placeholder="Buscar..."
-                />
-                <input
-                    v-model="search"
-                    class="h-9 rounded-lg border-gray-300 bg-gray-200 py-3 text-sm text-black focus:border-gray-300 focus:ring-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:focus:border-zinc-700"
-                    type="search"
-                    placeholder="Buscar Hexadecimal"
-                />
-                <ButtonRegisterAdmin class=" ">Registrar</ButtonRegisterAdmin>
+                <fieldset>
+                    <input
+                        v-model="form.name"
+                        class="h-9 rounded-lg border-gray-300 bg-gray-200 py-3 text-sm text-black focus:border-gray-300 focus:ring-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:focus:border-zinc-700"
+                        type="text"
+                        placeholder="Nombre"
+                    />
+                    <InputError v-if="errors?.name" class="block" :message="errors.name[0]" />
+                </fieldset>
+                <fieldset>
+                    <input
+                        v-model="form.hexadecimal"
+                        class="h-9 rounded-lg border-gray-300 bg-gray-200 py-3 text-sm text-black focus:border-gray-300 focus:ring-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:focus:border-zinc-700"
+                        type="text"
+                        placeholder="Hexadecimal"
+                    />
+                    <InputError v-if="errors?.hexadecimal" class="block" :message="errors.hexadecimal[0]" />
+                </fieldset>
+                <ButtonRegisterAdmin @toggle="submit">Registrar</ButtonRegisterAdmin>
             </form>
         </template>
         <template #thHead>
@@ -44,9 +66,12 @@ defineProps({
                         id=""
                     />
                 </td>
-                <td class="">{{ color.name }}</td>
-                <td class="">{{ color.hexadecimal }}:<span class="h-5 w-5 inline-block rounded-md" :style="'background-color: ' + '#' + color.hexadecimal"></span></td>
-                <td class="flex h-12 w-28 gap-2">
+                <td class="flex h-12 items-center gap-2">
+                    <div class="h-5 w-5 rounded-md" :style="'background-color: ' + '#' + color.hexadecimal"></div>
+                    {{ color.name }}
+                </td>
+                <td class="">#{{ color.hexadecimal }}</td>
+                <td class="">
                     <!-- <UpdateView :product="product" :key="'update -' + product.id" :types="types"
                         :categories="categories" :materials="materials" /> -->
                 </td>

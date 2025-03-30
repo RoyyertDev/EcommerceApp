@@ -7,6 +7,8 @@ use Illuminate\Support\Str;
 
 class Sticky extends Model
 {
+    protected $fillable = ['name'];
+
     public $incrementing = false; // Desactiva autoincremento
     protected $keyType = 'string'; // Define la clave primaria como string
 

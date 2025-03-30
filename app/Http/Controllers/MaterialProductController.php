@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\MaterialProduct;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class MaterialProductController extends Controller
 {
@@ -28,7 +31,21 @@ class MaterialProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        DB::beginTransaction();
+        try {
+            Validator::make($request->all(), [
+                'name' => ['required', 'string', 'max:20', 'unique:material_products'],
+            ],[
+                'required' => 'El nombre es obligatorio.',
+                'max' => 'El nombre debe tener menos de :max caracteres.',
+                'unique' => 'El nombre ya existe.',
+            ])->validate();
+            MaterialProduct::create($request->only('name'));
+            DB::commit();
+        } catch (ValidationException $e) {
+            DB::rollBack();
+            return redirect()->back()->withErrors(['materialProducts' => [$e->validator->errors()]])->withInput();
+        }
     }
 
     /**
