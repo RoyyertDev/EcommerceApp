@@ -94,7 +94,7 @@ class VariantController extends Controller
 
             // Redimencionar y optimizar la imagen
             $optimizedImage = Image::read($request->file('image'))
-                ->resize(1024, 1024, function ($constraint) {
+                ->resize(2048, 2048, function ($constraint) {
                     $constraint->aspectRatio();
                     $constraint->upsize();
                 })
@@ -140,7 +140,6 @@ class VariantController extends Controller
                 'sticky' => ['required', 'exists:stickies,id'],
                 'color' => ['required', 'exists:colors,id'],
                 'size' => ['required', 'exists:sizes,id'],
-                // 'image' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
                 'price' => ['required', 'numeric', 'min:0'],
                 'stock' => ['required', 'numeric', 'min:0', 'integer'],
                 'discount' => ['required', 'numeric'],
@@ -159,25 +158,32 @@ class VariantController extends Controller
             ]);
             $directory = 'images/products/product-' . $variant->product_id . '/variants';
 
-            if ($variant->image && Storage::exists(public_path($variant->image))) {
-                Storage::delete(public_path($variant->image));
+            if ($request->hasFile('image')) {
+                $request->validate([
+                    'image' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+                ]);
+
+                if ($variant->image && Storage::exists(public_path($variant->image))) {
+                    Storage::delete(public_path($variant->image));
+                }
+                
+                if (!Storage::exists($directory)) {
+                    Storage::makeDirectory($directory);
+                }
+    
+                // Redimencionar y optimizar la imagen
+                $optimizedImage = Image::read($request->file('image'))
+                    ->resize(2048, 2048, function ($constraint) {
+                        $constraint->aspectRatio();
+                        $constraint->upsize();
+                    })
+                    ->encode(new WebpEncoder(quality: 90));
+    
+                // // Guardar la imagen en el almacenamiento
+                Storage::disk('public')->put($directory . '/' . $variant->id . '.webp', (string) $optimizedImage);
+    
+                $variant->image = Storage::url($directory . '/' . $variant->id . '.webp');
             }
-            if (!Storage::exists($directory)) {
-                Storage::makeDirectory($directory);
-            }
-
-            // Redimencionar y optimizar la imagen
-            $optimizedImage = Image::read($request->file('image'))
-                ->resize(1024, 1024, function ($constraint) {
-                    $constraint->aspectRatio();
-                    $constraint->upsize();
-                })
-                ->encode(new WebpEncoder(quality: 90));
-
-            // // Guardar la imagen en el almacenamiento
-            Storage::disk('public')->put($directory . '/' . $variant->id . '.webp', (string) $optimizedImage);
-
-            $variant->image = Storage::url($directory . '/' . $variant->id . '.webp');
             $variant->save();
 
             DB::commit();

@@ -8,6 +8,8 @@ import { router, useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
 const open = ref(false);
+const fileInput = ref(null);
+const fileInputKey = ref(0);
 
 const props = defineProps({
     product: String,
@@ -36,6 +38,7 @@ const toggleOpen = () => {
     open.value = !open.value;
     form.reset();
     preview.reset();
+    fileInputKey.value++;
 };
 
 const submit = () => {
@@ -81,6 +84,8 @@ const handleImage = (e) => {
                 <div class="flex flex-col gap-2">
                     <InputLabel for="image">Nueva imagen</InputLabel>
                     <TextInput
+                        :key="fileInputKey"
+                        ref="fileInput"
                         type="file"
                         name="imageUploaded"
                         accept="image/*"
@@ -166,7 +171,9 @@ const handleImage = (e) => {
             </form>
         </template>
         <template #footer>
-            <button @click="(form.reset(), preview.reset())" class="mr-2 rounded-md bg-blue-800 px-2 py-2 text-white">Restablecer campos</button>
+            <button @click="(form.reset(), preview.reset(), fileInputKey++)" class="mr-2 rounded-md bg-blue-800 px-2 py-2 text-white">
+                Restablecer campos
+            </button>
             <button @click="toggleOpen" class="mr-2 rounded-md bg-red-800 px-2 py-2 text-white">Cancelar</button>
             <button @click="submit" class="rounded-md bg-[#DE5976] px-2 py-2 text-white">Actualizar</button>
         </template>

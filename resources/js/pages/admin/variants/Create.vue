@@ -8,6 +8,7 @@ import { useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
 const open = ref(false);
+const fileInputKey = ref(0);
 
 const toggleOpen = () => {
     open.value = !open.value;
@@ -104,6 +105,7 @@ const handleColor = (id) => {
                 <div class="flex flex-col gap-2">
                     <InputLabel for="imagen">Imagen</InputLabel>
                     <TextInput
+                        :key="fileInputKey"
                         @change="form.image = $event.target.files[0]"
                         type="file"
                         accept="image/*"
@@ -155,7 +157,9 @@ const handleColor = (id) => {
             </form>
         </template>
         <template #footer>
-            <button @click="(form.reset(), (colorView2 = null))" class="mr-2 rounded-md bg-blue-800 px-2 py-2 text-white">Limpiar campos</button>
+            <button @click="(form.reset(), (colorView2 = null), fileInputKey++)" class="mr-2 rounded-md bg-blue-800 px-2 py-2 text-white">
+                Limpiar campos
+            </button>
             <button @click="toggleOpen" class="mr-2 rounded-md bg-red-800 px-2 py-2 text-white">Cancelar</button>
             <button @click="submit" class="rounded-md bg-[#DE5976] px-2 py-2 text-white">Registrar</button>
         </template>
