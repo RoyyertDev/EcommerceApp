@@ -137,14 +137,14 @@ const logout = () => {
                                     v-if="$page.props.jetstream.managesProfilePhotos"
                                     class="flex rounded-full border-2 border-transparent text-sm transition focus:border-gray-300 focus:outline-none"
                                 >
-                                    <img class="h-8 w-8 rounded-full object-cover" :src="user.profile_photo_url" :alt="user.name" />
+                                    <img class="h-8 w-8 rounded-full object-cover" :src="user.profile_photo_url" :alt="user.names" />
                                 </button>
                                 <span v-else class="inline-flex rounded-md">
                                     <button
                                         type="button"
                                         class="inline-flex items-center rounded-md border border-[#DE5976] border-transparent bg-gray-50 px-3 py-2 text-sm font-medium leading-4 text-[#DE5976] transition duration-150 ease-in-out focus:outline-none dark:bg-zinc-900"
                                     >
-                                        {{ user.name }}
+                                        {{ user.names }}
 
                                         <svg
                                             class="-me-0.5 ms-2 h-4 w-4"
@@ -160,7 +160,7 @@ const logout = () => {
                                 </span>
                             </template>
 
-                            <template name="content">
+                            <template #content>
                                 <!-- Account Management -->
                                 <div class="block px-4 py-2 text-xs text-black dark:text-white">Administrar Cuenta</div>
 

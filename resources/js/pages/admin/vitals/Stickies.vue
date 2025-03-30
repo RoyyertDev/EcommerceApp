@@ -9,8 +9,9 @@
 <template>
     <DivVitals>
         <template #head>
+            <h1>Stickers</h1>
             <form class="flex gap-4">
-                <input v-model="search" class=" py-5 bg-gray-200 dark:bg-zinc-800 rounded-lg border-gray-300 dark:border-zinc-700 h-9 text-black dark:text-white text-sm focus:border-gray-300 dark:focus:border-zinc-700 focus:ring-transparent" type="search" placeholder="Buscar...">
+                <input v-model="search" class=" py-3 bg-gray-200 dark:bg-zinc-800 rounded-lg border-gray-300 dark:border-zinc-700 h-9 text-black dark:text-white text-sm focus:border-gray-300 dark:focus:border-zinc-700 focus:ring-transparent" type="search" placeholder="Buscar...">
                 <ButtonRegisterAdmin>Registrar</ButtonRegisterAdmin>
             </form>
         </template>
