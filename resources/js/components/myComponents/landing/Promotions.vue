@@ -37,7 +37,7 @@ import SectionMain from '@/components/myComponents/SectionMain.vue';
             />
         </template>
         <h1 class="flex items-center justify-center gap-2 pt-8 text-center text-xs font-semibold italic tracking-widest text-[#DE5976] sm:text-sm">
-            <img src="/img/promocion.png" alt="promocion" />¡LA MEJOR FORMA DE AHORRAR! NO TE LO PIERDAS
+            <img src="/img/promocion.png" alt="promocion" />¡LA MEJOR FORMA DE AHORRAR! NO TE LO PIERDAS¡
             <img src="/img/ahorrar-dinero.png" alt="ahorrar-dinero" />
         </h1>
     </SectionMain>

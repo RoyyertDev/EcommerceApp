@@ -42,17 +42,21 @@ const submit = () => {
             const stepTwoFields = ['country', 'province', 'city', 'zip_code', 'site_reference', 'phone'];
 
             // Revisamos si hay errores en los campos del primer paso
-            const hasErrorsInStepOne = stepOneFields.some((field) => errors[field]);
+            const hasErrorsInStepOne = stepOneFields.some((field) => props.errors[field]);
             // Revisamos si hay errores en los campos del segundo paso
-            const hasErrorsInStepTwo = stepTwoFields.some((field) => errors[field]);
+            const hasErrorsInStepTwo = stepTwoFields.some((field) => props.errors[field]);
 
             // Si hay errores en el primer paso, ir a formCard 0
-            if (hasErrorsInStepOne) {
+            if (hasErrorsInStepOne && !hasErrorsInStepTwo) {
                 formCard.value = 0;
             }
             // Si hay errores en el segundo paso, ir a formCard 1
-            else if (hasErrorsInStepTwo) {
+            else if (hasErrorsInStepTwo && !hasErrorsInStepOne) {
                 formCard.value = 1;
+            }
+            // Si hay errores en ambos pasos, ir a formCard 0
+            else {
+                formCard.value = 0;
             }
         },
     });

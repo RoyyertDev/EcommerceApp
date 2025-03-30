@@ -8,10 +8,9 @@ import { Link } from '@inertiajs/vue3';
         >
             <article>
                 <img src="/img/logo.png" width="100px" height="60px" alt="JirehImport logo" />
-                <p class="text-gray-600 dark:text-gray-400">
+                <p class="pt-4 text-gray-600 dark:text-gray-400">
                     En <span class="font-semibold italic text-[#DE5976]">Lo Esencial Shop VE,</span> encontrarás una amplia selección de ropa
-                    deportiva, casual y uniformes diseñados para ofrecer estilo, comodidad y seguridad. Nos destacamos por nuestra capacidad de
-                    adaptarnos rápidamente a las tendencias del mercado, asegurando siempre productos de alta calidad a precios accesibles.
+                    deportiva, casual y uniformes diseñados para ofrecer estilo, comodidad y seguridad.
                 </p>
             </article>
             <article>
@@ -44,6 +43,7 @@ import { Link } from '@inertiajs/vue3';
                             id="nombre"
                             name="nombre"
                             placeholder="Nombre"
+                            required
                         />
                         <input
                             class="rounded-lg border-none bg-gray-50 text-black ring-[#DE5976] focus:ring-[#DE5976] focus:ring-offset-0 dark:bg-[#0e0e0e] dark:text-white"
@@ -51,6 +51,7 @@ import { Link } from '@inertiajs/vue3';
                             id="emailFooter"
                             name="emailFooter"
                             placeholder="Email"
+                            required
                         />
                         <textarea
                             class="col-span-2 rounded-lg border-none bg-gray-50 text-black ring-[#DE5976] focus:ring-[#DE5976] focus:ring-offset-0 dark:bg-[#0e0e0e] dark:text-white"
@@ -58,6 +59,7 @@ import { Link } from '@inertiajs/vue3';
                             id="mensaje"
                             name="mensaje"
                             placeholder="Mensaje"
+                            required
                         ></textarea>
                         <button
                             class="col-start-2 w-auto rounded-lg border border-transparent bg-gray-50 px-1 py-1.5 text-gray-600 hover:border-[#DE5976] hover:text-[#DE5976] dark:bg-[#0e0e0e] dark:text-gray-400"
