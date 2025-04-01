@@ -116,7 +116,7 @@ const filter = ref('');
 								</td>
 								<td>
 									<li class="flex gap-1 items-center h-12">
-										<Link href="mailto:{{ user . email }}" target="_blank"
+										<Link href="mailto:{{ user.email }}" target="_blank"
 											class="hover:scale-125 transition duration-300">
 										<img src="/svg/admin/users/gmail.svg" alt="icon de Gmail">
 										</Link>
@@ -125,7 +125,7 @@ const filter = ref('');
 								</td>
 								<td>
 									<li class="flex gap-2 items-center h-12">
-										<Link href="https://wa.me/{{ user . detail . phone ?? '' }}" target="_blank"
+										<Link href="https://wa.me/{{ user.detail.phone ?? '' }}" target="_blank"
 											class="hover:scale-125 transition duration-300">
 										<img src="/svg/admin/users/whatsapp.svg" alt="icon de whatsapp">
 										</Link>
