@@ -33,6 +33,14 @@ const form = useForm({
     terms: false,
 });
 
+const soloNumeros = (event) => {
+    // Permitir solo números (0-9)
+    const key = event.key;
+    if (!/^[0-9]$/.test(key)) {
+        event.preventDefault(); // Evitar la entrada de cualquier otro carácter
+    }
+};
+
 const submit = () => {
     form.post(route('register'), {
         onFinish: () => form.reset('password', 'password_confirmation'),
@@ -71,7 +79,7 @@ const submit = () => {
                 <AuthenticationCardLogo />
             </template>
             <form class="space-y-6 p-6" @submit.prevent="submit">
-                <div class="flex items-center justify-between">
+                <div class="flex items-center justify-between px-1">
                     <h1 class="text-xl font-bold leading-tight tracking-tight">Registrate para crear tu cuenta</h1>
                     <div class="flex items-center space-x-1">
                         <button
@@ -90,7 +98,7 @@ const submit = () => {
                 </div>
                 <div class="overflow-hidden">
                     <div class="flex transition-transform duration-500 ease-in-out" :style="{ transform: `translateX(-${formCard * 100}%)` }">
-                        <fieldset class="grid w-full shrink-0 grid-cols-2 gap-x-4 gap-y-6">
+                        <fieldset class="grid w-full shrink-0 grid-cols-2 gap-x-4 gap-y-6 px-1">
                             <div>
                                 <InputLabel for="names" value="Nombres" />
                                 <TextInput
@@ -128,6 +136,8 @@ const submit = () => {
                                     type="text"
                                     name="identification_document"
                                     autocomplete="identification_document"
+                                    @keypress="soloNumeros"
+                                    maxLength="8"
                                 />
                                 <InputError class="mt-2" :message="errors.identification_document" />
                             </div>
@@ -180,7 +190,7 @@ const submit = () => {
                             </div>
                             <PrimaryButton @click="formCard = 1" type="button" class="col-span-2"> Siguiente </PrimaryButton>
                         </fieldset>
-                        <fieldset class="grid w-full shrink-0 grid-cols-2 gap-x-4 gap-y-6">
+                        <fieldset class="grid w-full shrink-0 grid-cols-2 gap-x-4 gap-y-6 px-1">
                             <div>
                                 <InputLabel for="country" value="Pais" />
                                 <Select v-model="form.country" name="country" id="country"> </Select>
@@ -247,7 +257,7 @@ const submit = () => {
                                 </div>
                                 <InputError class="mt-2" :message="errors.phone" />
                             </div>
-                            <PrimaryButton class="col-span-2"> Registrarse </PrimaryButton>
+                            <PrimaryButton class="col-span-2 mt-auto max-h-fit"> Registrarse </PrimaryButton>
                         </fieldset>
                     </div>
                 </div>
