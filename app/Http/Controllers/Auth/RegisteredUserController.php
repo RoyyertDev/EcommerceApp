@@ -46,7 +46,7 @@ class RegisteredUserController extends Controller
             Validator::make($request->all(), [
                 'names' => ['required', 'string', 'max:255'],
                 'surnames' => ['required', 'string', 'max:255'],
-                'identification_document' => ['required', 'numeric', 'max:8', 'min:7', 'unique:users'],
+                'identification_document' => ['required', 'numeric', 'digits_between:7,8', 'unique:users'],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                 'password' => ['required', 'confirmed', Rules\Password::defaults()],
                 'gender' => ['required', 'boolean'],
@@ -63,6 +63,7 @@ class RegisteredUserController extends Controller
                 'numeric' => 'El campo :attribute debe ser numérico.',
                 'min' => 'El campo :attribute debe tener al menos :min caracteres.',
                 'max' => 'El campo :attribute debe tener menos de :max caracteres.',
+                'digits_between' => 'El campo :attribute debe tener entre :min y :max caracteres.',
                 'digits' => 'El campo :attribute debe tener 10 caracteres.',
                 'email' => 'El campo :attribute debe ser un correo electrónico válido.',
                 'unique' => 'El :attribute ya ha sido registrado.',

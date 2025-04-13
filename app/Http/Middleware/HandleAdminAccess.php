@@ -19,30 +19,28 @@ class HandleAdminAccess
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Auth::check()){
-            if (Auth::user()->detail && Auth::user()->detail->role_id === RoleUser::where('name', 'admin')->first()->id) {
-                $userToken = Auth::user()->tokens->where('name', 'admin_token')->first();
-                if ($userToken) {
-                    $sessionTokenId = $request->session()->get('admin_token_id');
-                    if ($userToken->id === $sessionTokenId) {
-                        return $next($request);
-                    } else {
-                        Auth::guard('web')->logout();
-                        Session::flush();
-                        return redirect()->route('login');
-                    }
-                } else {
-                    Auth::guard('web')->logout();
-                    Session::flush();
-                    return redirect()->route('login');
-                }
-            } else {
-                Auth::guard('web')->logout();
-                Session::flush();
-                return redirect()->route('login');
-            }
-        } else {
+        if(!Auth::check()){
             return redirect()->route('login');
         }
+
+        $user = Auth::user();
+        $adminRoleId = RoleUser::where('name', 'admin')->first()?->id;
+
+        if (!$user->detail || $user->detail->role_id !== $adminRoleId) {
+            Auth::guard('web')->logout();
+            Session::flush();
+            return redirect()->route('login');
+        }
+
+        $sessionTokenId = $request->session()->get('admin_token_id');
+        $userToken = Auth::user()->tokens->where('id', $sessionTokenId)->first();
+
+        if ($userToken && $userToken->id == $sessionTokenId) {
+            return $next($request);
+        }
+
+        Auth::guard('web')->logout();
+        Session::flush();
+        return redirect()->route('login');
     }
 }
