@@ -46,7 +46,7 @@ class RegisteredUserController extends Controller
             Validator::make($request->all(), [
                 'names' => ['required', 'string', 'max:255'],
                 'surnames' => ['required', 'string', 'max:255'],
-                'identification_document' => ['required', 'numeric', 'max:10', 'min:7', 'unique:users'],
+                'identification_document' => ['required', 'numeric', 'max:8', 'min:7', 'unique:users'],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                 'password' => ['required', 'confirmed', Rules\Password::defaults()],
                 'gender' => ['required', 'boolean'],
