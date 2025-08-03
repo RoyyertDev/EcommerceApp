@@ -11,36 +11,43 @@ const widgetInfo = [
         title: 'Clientes',
         h4: props.widgetCount.users,
         icon: '/svg/admin/dashboard/clients.svg',
+        herf: '/admin/users',
     },
     {
         title: 'Productos',
         h4: props.widgetCount.products,
         icon: '/svg/admin/dashboard/products.svg',
+        herf: '/admin/products',
     },
     {
         title: 'Variantes',
         h4: props.widgetCount.variants,
         icon: '/svg/admin/dashboard/variants.svg',
+        herf: ' ',
     },
     {
         title: 'Tipos de productos',
         h4: props.widgetCount.typeProducts,
         icon: '/svg/admin/dashboard/typeProducts.svg',
+        herf: '/admin/products',
     },
     {
         title: 'Categorias de productos',
         h4: props.widgetCount.categoryProducts,
         icon: '/svg/admin/dashboard/categoryProducts.svg',
+        herf: '/admin/products',
     },
     {
         title: 'Materiales de productos',
         h4: props.widgetCount.materialProducts,
         icon: '/svg/admin/dashboard/materialProducts.svg',
+        herf: '/admin/products',
     },
     {
         title: 'Colores',
         h4: props.widgetCount.colors,
         icon: '/svg/admin/dashboard/colors.svg',
+        herf: '/admin/products',
     },
     {
         title: 'Tallas',
