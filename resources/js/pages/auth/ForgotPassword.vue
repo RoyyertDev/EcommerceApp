@@ -6,6 +6,7 @@ import PrimaryButton from '@/components/PrimaryButton.vue';
 import TextInput from '@/components/TextInput.vue';
 import LandingLayout from '@/layouts/landing/LandingLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
+import { ref } from 'vue';
 
 defineProps({
     status: String,
@@ -16,7 +17,18 @@ const form = useForm({
     email: '',
 });
 
-const submit = () => {
+const error = ref('');
+
+const submit = (e) => {
+    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|es|net|org|info)$/i;
+
+    if (!regex.test(form.email)) {
+        e.preventDefault();
+        error.value = 'Ingresa un correo válido que termine en .com, .es, .net.';
+        return;
+    }
+
+    error.value = '';
     form.post(route('password.email'));
 };
 </script>
@@ -37,13 +49,14 @@ const submit = () => {
                 </div>
 
                 <div v-if="status" class="mb-4 px-6 pt-0.5 text-sm font-medium text-green-600 dark:text-green-400">
-                    {{ status }}
+                    <!-- {{ status }} -->
+                    Si la cuenta existe, se enviará un enlace de restablecimiento.
                 </div>
 
                 <form class="space-y-6 px-6 pb-6" @submit.prevent="submit">
                     <!-- @csrf -->
                     <div class="block">
-                        <InputLabel for="email" value="Correo electronico" />
+                        <InputLabel for="email" value="Correo electrónico" />
                         <TextInput
                             v-model="form.email"
                             id="email"
@@ -53,11 +66,13 @@ const submit = () => {
                             required
                             autofocus
                             autocomplete="username"
+                            placeholder="jirehimport@gmail.com"
                         />
                     </div>
                     <div class="mt-4 flex items-center justify-end">
                         <PrimaryButton> Enviar enlace de restablecimiento </PrimaryButton>
                     </div>
+                    <p v-if="error" class="mt-2 text-red-500">{{ error }}</p>
                 </form>
             </AuthenticationCard>
         </div>

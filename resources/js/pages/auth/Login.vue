@@ -44,7 +44,7 @@ const submit = () => {
                 <form class="space-y-6 p-6" @submit.prevent="submit">
                     <h1 class="text-xl font-bold leading-tight tracking-tight">Inicia sesión en tu cuenta</h1>
                     <div>
-                        <InputLabel for="email" value="Correo electronico" />
+                        <InputLabel for="email" value="Correo electrónico" />
                         <TextInput
                             v-model="form.email"
                             id="email"

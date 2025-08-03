@@ -148,7 +148,7 @@ const submit = () => {
                                     placeholder="jirehimport@gmail.com"
                                     id="email"
                                     class="mt-1 block w-full"
-                                    type="email"
+                                    type="text"
                                     name="email"
                                     autocomplete="email"
                                 />

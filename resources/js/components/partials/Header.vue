@@ -42,8 +42,8 @@ onMounted(() => {
             <div class="flex flex-col items-center justify-center gap-3 sm:flex-row md:gap-6 lg:gap-12">
                 <LinksNav route="/" href="/">Inicio</LinksNav>
                 <LinksNav route="/about" href="/about">Nosotros</LinksNav>
-                <LinksNav route="" href="/">Productos</LinksNav>
-                <LinksNav route="" href="/">Carrito</LinksNav>
+                <!-- <LinksNav route="" href="/">Productos</LinksNav>
+                <LinksNav route="" href="/">Carrito</LinksNav> -->
                 <ToggleTheme />
             </div>
             <div class="flex items-center justify-center gap-4" v-if="canLogin">

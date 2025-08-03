@@ -44,10 +44,10 @@ class RegisteredUserController extends Controller
         DB::beginTransaction();
         try {
             Validator::make($request->all(), [
-                'names' => ['required', 'string', 'max:255'],
-                'surnames' => ['required', 'string', 'max:255'],
+                'names' => ['required', 'string', 'max:255', 'regex:/^[\pL\s]+$/u'],
+                'surnames' => ['required', 'string', 'max:255', 'regex:/^[\pL\s]+$/u'],
                 'identification_document' => ['required', 'numeric', 'digits_between:7,8', 'unique:users'],
-                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users', 'regex:/^[\w.+-]+@[\w.-]+\.(com|es|net)$/i'],
                 'password' => ['required', 'confirmed', Rules\Password::defaults()],
                 'gender' => ['required', 'boolean'],
                 // 'country' => ['required', 'string', 'max:100'],
@@ -59,17 +59,43 @@ class RegisteredUserController extends Controller
                 // 'phone' => ['required', 'string', 'max:15'],
                 'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
             ], [
-                'required' => 'El campo :attribute es obligatorio.',
-                'numeric' => 'El campo :attribute debe ser numérico.',
-                'min' => 'El campo :attribute debe tener al menos :min caracteres.',
-                'max' => 'El campo :attribute debe tener menos de :max caracteres.',
-                'digits_between' => 'El campo :attribute debe tener entre :min y :max caracteres.',
-                'digits' => 'El campo :attribute debe tener 10 caracteres.',
-                'email' => 'El campo :attribute debe ser un correo electrónico válido.',
-                'unique' => 'El :attribute ya ha sido registrado.',
-                'confirmed' => 'La confirmación de :attribute no coincide.',
-                'boolean' => 'El campo :attribute debe ser verdadero o falso.',
-                'accepted' => 'Debes aceptar los términos y condiciones.',
+                // Mensajes para names
+                'names.required' => 'El nombre es obligatorio.',
+                'names.string' => 'El nombre debe ser un texto válido.',
+                'names.max' => 'El nombre no debe superar los 255 caracteres.',
+                'names.regex' => 'El nombre solo puede contener letras y espacios.',
+
+                // Mensajes para surnames
+                'surnames.required' => 'El apellido es obligatorio.',
+                'surnames.string' => 'El apellido debe ser un texto válido.',
+                'surnames.max' => 'El apellido no debe superar los 255 caracteres.',
+                'surnames.regex' => 'El apellido solo puede contener letras y espacios.',
+
+                // Mensajes para identification_document
+                'identification_document.required' => 'El documento de identificación es obligatorio.',
+                'identification_document.numeric' => 'El documento de identificación debe ser numérico.',
+                'identification_document.digits_between' => 'El documento de identificación debe tener entre 7 y 8 dígitos.',
+                'identification_document.unique' => 'El documento de identificación ya está registrado.',
+
+                // Mensajes para email
+                'email.required' => 'El correo electrónico es obligatorio.',
+                'email.string' => 'El correo electrónico debe ser un texto válido.',
+                'email.email' => 'El correo electrónico debe tener un formato válido.',
+                'email.max' => 'El correo electrónico no debe superar los 255 caracteres.',
+                'email.unique' => 'El correo electrónico ya está registrado.',
+                'email.regex' => 'Debe usar un dominio válido (.com, .es o .net).',
+
+                // Mensajes para password
+                'password.required' => 'La contraseña es obligatoria.',
+                'password.confirmed' => 'La confirmación de la contraseña no coincide.',
+
+                // Mensajes para gender
+                'gender.required' => 'El género es obligatorio.',
+                'gender.boolean' => 'El género debe ser verdadero o falso.',
+
+                // Mensajes para terms (términos y condiciones)
+                'terms.accepted' => 'Debes aceptar los términos y condiciones.',
+                'terms.required' => 'Debes aceptar los términos y condiciones.',
             ])->validate();
 
             $user = User::create([
@@ -83,7 +109,7 @@ class RegisteredUserController extends Controller
 
             UserDetail::create([
                 'user_id' => $user->id,
-                'role_id' => RoleUser::where('name', 'admin')->first()->id,
+                'role_id' => RoleUser::where('name', 'admin')->value('id'),
                 'country' => 'Venezuela',
                 'province' => 'Aragua',
                 'city' => 'Maracay',
