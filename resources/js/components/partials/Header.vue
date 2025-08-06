@@ -9,22 +9,20 @@ defineProps({
         type: Boolean,
     },
 });
+
 let navOpen = ref(false),
     scrolled = ref(false);
-function toggleNav() {
-    navOpen.value = !navOpen.value;
-}
+
+const toggleNav = () => (navOpen.value = !navOpen.value);
+
 const authUser = usePage().props.auth.user;
 const roleAdmin = usePage().props.roleAdmin;
-onMounted(() => {
-    window.addEventListener('scroll', () => {
-        scrolled.value = window.pageYOffset > 0 ? true : false;
-    });
-});
+
+onMounted(() => window.addEventListener('scroll', () => (scrolled.value = window.pageYOffset > 0 ? true : false)));
 </script>
 <template>
     <header
-        class="sticky top-0 z-10 mb-4 h-14 w-full rounded-b-3xl bg-white px-7 shadow-[#DE5976] transition-transform duration-500 dark:bg-black md:px-14 lg:px-28"
+        class="sticky top-0 z-10 mb-4 w-full rounded-b-3xl bg-white px-7 shadow-[#DE5976] transition-transform duration-300 dark:bg-black md:px-14 lg:px-28"
         :class="{ 'shadow-[0_4px_5px_-4px]': scrolled || navOpen }"
     >
         <nav
@@ -42,8 +40,8 @@ onMounted(() => {
             <div class="flex flex-col items-center justify-center gap-3 sm:flex-row md:gap-6 lg:gap-12">
                 <LinksNav route="/" href="/">Inicio</LinksNav>
                 <LinksNav route="/about" href="/about">Nosotros</LinksNav>
-                <!-- <LinksNav route="" href="/">Productos</LinksNav>
-                <LinksNav route="" href="/">Carrito</LinksNav> -->
+                <LinksNav route="" href="/">Productos</LinksNav>
+                <LinksNav route="" href="/">Carrito</LinksNav>
                 <ToggleTheme />
             </div>
             <div class="flex items-center justify-center gap-4" v-if="canLogin">
